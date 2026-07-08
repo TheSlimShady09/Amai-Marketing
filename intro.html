@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMAI Marketing — Intro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       AMAI Marketing — Intro / Logo Reveal
+       Paletë: vetëm e kuqe (#E10600) dhe e bardhë (#FFFFFF)
+       ============================================================ */
+
+    :root {
+      --white: #FFFFFF;
+      --red: #E10600;
+      --red-dark: #B00500;
+      --ink: #1A1A1A;
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1); /* ease-out-expo, pa bounce */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--ink);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .stage {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--white);
+      cursor: pointer; /* kliko për ta riluajtur */
+    }
+
+    /* Faji delikat i kuq në sfond */
+    .stage::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 55vw;
+      height: 55vw;
+      background: radial-gradient(circle, rgba(225, 6, 0, 0.06), transparent 62%);
+      pointer-events: none;
+    }
+
+    /* ---------------- Wordmark ---------------- */
+    .brand {
+      position: relative;
+      text-align: center;
+      z-index: 2;
+    }
+
+    /* rreshti me maskë: shkronjat ngrihen nga poshtë */
+    .brand__mask {
+      overflow: hidden;
+      padding-bottom: 0.06em; /* hapësirë për poshtë-vijat e shkronjave */
+    }
+
+    .brand__word {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: clamp(3rem, 13vw, 9rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      display: inline-flex;
+    }
+
+    .brand__word .ltr {
+      display: inline-block;
+      transform: translateY(110%);
+      animation: rise 0.9s var(--ease) forwards;
+    }
+
+    /* pika e kuqe e brandit */
+    .brand__dot {
+      color: var(--red);
+      display: inline-block;
+      transform: translateY(110%);
+      animation: rise 0.9s var(--ease) forwards;
+    }
+
+    @keyframes rise {
+      to { transform: translateY(0); }
+    }
+
+    /* nëntitulli MARKETING — hapet me letter-spacing dhe zbehet brenda */
+    .brand__sub {
+      margin-top: clamp(8px, 1.4vw, 16px);
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: clamp(0.8rem, 2.2vw, 1.35rem);
+      letter-spacing: 0.1em;
+      color: var(--red);
+      opacity: 0;
+      transform: translateY(8px);
+      animation: subIn 1s var(--ease) 0.9s forwards;
+    }
+
+    @keyframes subIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 0.42em;
+      }
+    }
+
+    /* vija e kuqe që vizatohet nga qendra */
+    .brand__rule {
+      width: min(70%, 340px);
+      height: 3px;
+      margin: clamp(16px, 2.5vw, 28px) auto 0;
+      background: var(--red);
+      border-radius: 3px;
+      transform: scaleX(0);
+      transform-origin: center;
+      animation: draw 0.9s var(--ease) 1.25s forwards;
+    }
+
+    @keyframes draw {
+      to { transform: scaleX(1); }
+    }
+
+    /* ---------------- Perdet e kuqe (sweep hyrës) ---------------- */
+    .curtain {
+      position: absolute;
+      inset: 0;
+      background: var(--red);
+      z-index: 5;
+      transform-origin: left;
+      animation: curtainOut 1.1s var(--ease) 0.35s forwards;
+    }
+
+    /* perde e dytë më e errët për thellësi */
+    .curtain--back {
+      background: var(--red-dark);
+      animation-delay: 0.15s;
+    }
+
+    @keyframes curtainOut {
+      0%   { transform: scaleX(1); transform-origin: left; }
+      100% { transform: scaleX(0); transform-origin: right; }
+    }
+
+    /* ---------------- Reduced motion ---------------- */
+    @media (prefers-reduced-motion: reduce) {
+      .brand__word .ltr,
+      .brand__dot { transform: none; animation: none; }
+      .brand__sub {
+        opacity: 1; transform: none;
+        letter-spacing: 0.42em; animation: none;
+      }
+      .brand__rule { transform: scaleX(1); animation: none; }
+      .curtain { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stage" id="stage" title="Kliko për ta riluajtur">
+    <div class="brand" id="brand">
+      <div class="brand__mask">
+        <div class="brand__word" aria-label="AMAI">
+          <span class="ltr" style="animation-delay: 0.75s">A</span>
+          <span class="ltr" style="animation-delay: 0.83s">M</span>
+          <span class="ltr" style="animation-delay: 0.91s">A</span>
+          <span class="ltr" style="animation-delay: 0.99s">I</span>
+          <span class="brand__dot" style="animation-delay: 1.07s">.</span>
+        </div>
+      </div>
+      <div class="brand__sub">MARKETING</div>
+      <div class="brand__rule" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <script>
+    /* Riluaj animacionin me klik (rikrijon nyjen që të rifillojnë keyframes) */
+    const stage = document.getElementById("stage");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!reduce) {
+      stage.addEventListener("click", () => {
+        const brand = document.getElementById("brand");
+        const clone = brand.cloneNode(true);
+        brand.replaceWith(clone);
+        clone.id = "brand";
+
+        // hiq perdet e vjetra dhe shto të reja për sweep-in
+        stage.querySelectorAll(".curtain").forEach((c) => c.remove());
+        const c1 = document.createElement("div");
+        c1.className = "curtain curtain--back";
+        const c2 = document.createElement("div");
+        c2.className = "curtain";
+        stage.append(c1, c2);
+      });
+    }
+  </script>
+
+  <!-- Perdet hyrëse (renderohen mbi wordmark) -->
+  <script>
+    (function () {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const s = document.getElementById("stage");
+      const back = document.createElement("div");
+      back.className = "curtain curtain--back";
+      const front = document.createElement("div");
+      front.className = "curtain";
+      s.append(back, front);
+    })();
+  </script>
+</body>
+</html>

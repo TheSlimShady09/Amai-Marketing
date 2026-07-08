@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rezervime — AMAI Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       AMAI Marketing — Seksioni "Rezervime"
+       Paletë: vetëm e kuqe (#E10600) dhe e bardhë (#FFFFFF)
+       ============================================================ */
+
+    :root {
+      --white: #FFFFFF;
+      --red: #E10600;
+      --red-dark: #B00500;
+      --ink: #1A1A1A;
+      --gray: #6B6B6B;
+      --line: #EAEAEA;
+
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      /* easing i butë ease-out, pa bounce */
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background-color: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Fokus i dukshëm për tastierë (aksesueshmëri) */
+    :focus-visible {
+      outline: 3px solid var(--red);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    /* --- Seksioni --- */
+    .rezervime {
+      padding: clamp(64px, 9vw, 120px) 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Detaj nënshkrimi: formë gjeometrike delikate e kuqe në sfond */
+    .rezervime::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 360px;
+      height: 360px;
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+
+    .rezervime::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 220px;
+      height: 220px;
+      background: var(--red);
+      opacity: 0.04;
+      border-radius: 30px;
+      transform: rotate(15deg);
+      pointer-events: none;
+    }
+
+    .rezervime__inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rezervime__grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: clamp(40px, 6vw, 88px);
+      align-items: center;
+    }
+
+    /* ---------- Kolona majtas ---------- */
+    .rezervime__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 22px;
+    }
+
+    /* vija e vogël e kuqe para eyebrow-t */
+    .rezervime__eyebrow::before {
+      content: '';
+      width: 34px;
+      height: 2px;
+      background: var(--red);
+      display: inline-block;
+    }
+
+    .rezervime__title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.1rem, 4.6vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 18px;
+      text-wrap: balance;
+    }
+
+    .rezervime__title span {
+      color: var(--red);
+    }
+
+    .rezervime__subtitle {
+      font-size: 1.1rem;
+      color: var(--gray);
+      max-width: 44ch;
+      margin-bottom: 34px;
+    }
+
+    .rezervime__perks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .rezervime__perk {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 1rem;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* ikona check e kuqe në rreth */
+    .rezervime__check {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(225, 6, 0, 0.1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rezervime__check svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--red);
+    }
+
+    /* ---------- Kolona djathtas: karta e formës ---------- */
+    .rezervime__card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: clamp(26px, 4vw, 42px);
+      box-shadow: 0 24px 60px -20px rgba(26, 26, 26, 0.18);
+    }
+
+    .rezervime__card-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .rezervime__card-hint {
+      font-size: 0.92rem;
+      color: var(--gray);
+      margin-bottom: 26px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field__label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .field__label .opt {
+      color: var(--gray);
+      font-weight: 400;
+      font-family: var(--font-body);
+    }
+
+    .field__control {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--ink);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 13px 15px;
+      transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+    }
+
+    .field__control::placeholder {
+      color: var(--gray);
+    }
+
+    /* Efekt focus: border e kuqe + glow i lehtë i kuq */
+    .field__control:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(225, 6, 0, 0.14);
+    }
+
+    /* gjendje gabimi (validim) */
+    .field__control.is-error {
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(225, 6, 0, 0.1);
+    }
+
+    .field__error {
+      display: none;
+      color: var(--red);
+      font-size: 0.82rem;
+      margin-top: 7px;
+    }
+
+    .field__error.is-visible {
+      display: block;
+    }
+
+    /* dropdown i stilizuar */
+    select.field__control {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      padding-right: 44px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23E10600' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+    }
+
+    /* kur asnjë shërbim s'është zgjedhur, teksti duket si placeholder */
+    select.field__control.is-placeholder {
+      color: var(--gray);
+    }
+
+    textarea.field__control {
+      resize: vertical;
+      min-height: 92px;
+    }
+
+    /* dy fusha krah për krah (data + ora) */
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* --- Butoni WhatsApp --- */
+    .btn-whatsapp {
+      width: 100%;
+      margin-top: 6px;
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--red);
+      border: none;
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      cursor: pointer;
+      transition: background-color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+      box-shadow: 0 8px 22px -8px rgba(225, 6, 0, 0.55);
+    }
+
+    .btn-whatsapp:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px rgba(176, 5, 0, 0.6);
+    }
+
+    .btn-whatsapp:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    .btn-whatsapp svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--white);
+    }
+
+    .rezervime__note {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--gray);
+      margin-top: 16px;
+    }
+
+    /* ---------- Animacione: fade-in + slide-up në scroll ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* vonesa e lehtë për kartën, që të hyjë pas tekstit */
+    .rezervime__card.reveal {
+      transition-delay: 0.12s;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .rezervime__grid {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+
+      .rezervime__subtitle {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .field-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- Respekto prefers-reduced-motion ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .btn-whatsapp,
+      .field__control {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===================== SEKSIONI REZERVIME ===================== -->
+  <section class="rezervime" id="rezervime" aria-labelledby="rezervime-title">
+    <div class="rezervime__inner">
+      <div class="rezervime__grid">
+
+        <!-- Kolona majtas: teksti nxitës -->
+        <div class="rezervime__intro reveal">
+          <p class="rezervime__eyebrow">Rezervime</p>
+          <h2 class="rezervime__title" id="rezervime-title">
+            Rezervo konsultën tënde <span>falas</span>
+          </h2>
+          <p class="rezervime__subtitle">
+            Plotëso formën dhe dërgoje direkt në WhatsApp. Të përgjigjemi po atë ditë me hapat konkretë për biznesin tënd.
+          </p>
+
+          <ul class="rezervime__perks">
+            <li class="rezervime__perk">
+              <span class="rezervime__check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              Konsultë 30-minutëshe pa asnjë kosto
+            </li>
+            <li class="rezervime__perk">
+              <span class="rezervime__check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              Përgjigje po atë ditë, jo pas javësh
+            </li>
+            <li class="rezervime__perk">
+              <span class="rezervime__check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              Plan konkret veprimi, jo premtime boshe
+            </li>
+          </ul>
+        </div>
+
+        <!-- Kolona djathtas: forma -->
+        <div class="rezervime__card reveal">
+          <h3 class="rezervime__card-title">Të dhënat e tua</h3>
+          <p class="rezervime__card-hint">Të dërgohen direkt te ekipi ynë në WhatsApp.</p>
+
+          <form id="rezervimeForm" novalidate>
+            <!-- Emri -->
+            <div class="field">
+              <label class="field__label" for="emri">Emri i plotë</label>
+              <input class="field__control" type="text" id="emri" name="emri" placeholder="P.sh. Arben Hoxha" autocomplete="name" required />
+              <span class="field__error" id="emri-error">Ju lutem shkruani emrin tuaj.</span>
+            </div>
+
+            <!-- Shërbimi -->
+            <div class="field">
+              <label class="field__label" for="sherbimi">Shërbimi i interesuar</label>
+              <select class="field__control is-placeholder" id="sherbimi" name="sherbimi" required>
+                <option value="" disabled selected>Zgjidh një shërbim</option>
+                <option value="Menaxhim Rrjetesh Sociale">Menaxhim Rrjetesh Sociale</option>
+                <option value="Zhvillim Web">Zhvillim Web</option>
+                <option value="Automatizim Biznesi">Automatizim Biznesi</option>
+                <option value="Strategji Marketingu">Strategji Marketingu</option>
+              </select>
+              <span class="field__error" id="sherbimi-error">Ju lutem zgjidhni një shërbim.</span>
+            </div>
+
+            <!-- Data + Ora -->
+            <div class="field">
+              <label class="field__label" for="data">
+                Data e preferuar <span class="opt">(opsionale)</span>
+              </label>
+              <div class="field-row">
+                <input class="field__control" type="date" id="data" name="data" />
+                <input class="field__control" type="time" id="ora" name="ora" />
+              </div>
+            </div>
+
+            <!-- Mesazhi -->
+            <div class="field">
+              <label class="field__label" for="mesazhi">
+                Mesazh shtesë <span class="opt">(opsional)</span>
+              </label>
+              <textarea class="field__control" id="mesazhi" name="mesazhi" placeholder="Trego shkurt për biznesin ose sfidën tënde..."></textarea>
+            </div>
+
+            <!-- Butoni WhatsApp -->
+            <button class="btn-whatsapp" type="submit">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Rezervo në WhatsApp
+            </button>
+            <p class="rezervime__note">S'ka nevojë të krijosh llogari — hapet direkt biseda.</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* ============================================================
+       AMAI Marketing — Logjika e Rezervimeve (WhatsApp)
+       ============================================================ */
+
+    // >>> ZËVENDËSO me numrin real të WhatsApp të biznesit,
+    //     format ndërkombëtar pa "+" (p.sh. 355691234567)
+    const WHATSAPP_NUMER = "355691234567";
+
+    const form = document.getElementById("rezervimeForm");
+    const emriEl = document.getElementById("emri");
+    const sherbimiEl = document.getElementById("sherbimi");
+    const dataEl = document.getElementById("data");
+    const oraEl = document.getElementById("ora");
+    const mesazhiEl = document.getElementById("mesazhi");
+
+    // Dropdown-i ndryshon ngjyrë kur zgjidhet një vlerë (largon stilin placeholder)
+    sherbimiEl.addEventListener("change", () => {
+      sherbimiEl.classList.toggle("is-placeholder", sherbimiEl.value === "");
+      setError(sherbimiEl, "sherbimi-error", false);
+    });
+
+    // Largo gjendjen e gabimit sapo përdoruesi fillon të shkruajë
+    emriEl.addEventListener("input", () => {
+      if (emriEl.value.trim()) setError(emriEl, "emri-error", false);
+    });
+
+    // Tregon / fsheh gabimin për një fushë
+    function setError(el, errorId, show) {
+      el.classList.toggle("is-error", show);
+      const msg = document.getElementById(errorId);
+      if (msg) msg.classList.toggle("is-visible", show);
+      if (show) el.setAttribute("aria-invalid", "true");
+      else el.removeAttribute("aria-invalid");
+    }
+
+    // Formaton datën lexueshëm në shqip; shton orën nëse ekziston
+    function formatoData(dataVlera, oraVlera) {
+      if (!dataVlera) return "";
+      // dataVlera vjen si "YYYY-MM-DD" — e ndajmë që të mos ndikohet nga ora lokale
+      const [vit, muaj, dite] = dataVlera.split("-").map(Number);
+      const d = new Date(vit, muaj - 1, dite);
+      let tekst = d.toLocaleDateString("sq-AL", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+      if (oraVlera) tekst += ", ora " + oraVlera;
+      return tekst;
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const emri = emriEl.value.trim();
+      const sherbimi = sherbimiEl.value;
+      const dataFormatuar = formatoData(dataEl.value, oraEl.value);
+      const mesazhi = mesazhiEl.value.trim();
+
+      // --- Validim: emri dhe shërbimi janë të detyrueshëm ---
+      let valid = true;
+      if (!emri) { setError(emriEl, "emri-error", true); valid = false; }
+      if (!sherbimi) { setError(sherbimiEl, "sherbimi-error", true); valid = false; }
+
+      if (!valid) {
+        // Fokuso fushën e parë me gabim (aksesueshmëri)
+        (!emri ? emriEl : sherbimiEl).focus();
+        return;
+      }
+
+      // --- Ndërto mesazhin e strukturuar ---
+      const rreshtat = [
+        "Përshëndetje! Dua të rezervoj një konsultë.",
+        "• Emri: " + emri,
+        "• Shërbimi: " + sherbimi
+      ];
+      if (dataFormatuar) rreshtat.push("• Data: " + dataFormatuar);
+      if (mesazhi) rreshtat.push("• Mesazhi: " + mesazhi);
+
+      const teksti = rreshtat.join("\n");
+
+      // --- Enkodo dhe hap WhatsApp (celular ose WhatsApp Web) ---
+      const url = "https://wa.me/" + WHATSAPP_NUMER + "?text=" + encodeURIComponent(teksti);
+      window.open(url, "_blank", "noopener");
+    });
+
+    /* ---------- Animacione fade-in + slide-up në scroll ---------- */
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const revealEls = document.querySelectorAll(".reveal");
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      // Pa animacion: shfaq direkt përmbajtjen
+      revealEls.forEach((el) => el.classList.add("is-visible"));
+    } else {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      revealEls.forEach((el) => observer.observe(el));
+    }
+  </script>
+</body>
+</html>
