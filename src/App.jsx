@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
 import {
   ArrowRight,
@@ -16,7 +16,9 @@ import {
   MessageCircle,
   Share2,
   Mail,
-  Phone
+  Phone,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
@@ -24,18 +26,21 @@ import Intro from './Intro.jsx';
 import './App.css';
 
 const EASE = [0.22, 1, 0.36, 1];
+// Softer, gentler curve for scroll reveals — eases in and out for a calm glide.
+const EASE_SMOOTH = [0.25, 0.4, 0.25, 1];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } }
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1.1, ease: EASE_SMOOTH } }
 };
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } }
+  visible: { transition: { staggerChildren: 0.16, delayChildren: 0.05 } }
 };
 
-const viewportOnce = { once: true, margin: '-80px' };
+// Trigger a bit earlier so sections ease in before they're fully in view.
+const viewportOnce = { once: true, margin: '-120px' };
 
 const NAV_LINKS = [
   { href: '#sherbimet', label: 'Shërbimet' },
@@ -261,7 +266,7 @@ function Services() {
         </motion.div>
 
         <motion.div
-          className="services-grid"
+          className="services-carousel"
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
@@ -305,10 +310,10 @@ function WhyUs() {
         <div className="why-us-grid">
           <motion.div
             className="why-us-image duotone"
-            initial={{ opacity: 0, x: -48 }}
+            initial={{ opacity: 0, x: -36 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={viewportOnce}
-            transition={{ duration: 0.8, ease: EASE }}
+            transition={{ duration: 1.2, ease: EASE_SMOOTH }}
           >
             <img
               src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
@@ -506,10 +511,10 @@ function Founder() {
         <div className="founder-grid">
           <motion.div
             className="founder-portrait"
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -32 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={viewportOnce}
-            transition={{ duration: 0.8, ease: EASE }}
+            transition={{ duration: 1.2, ease: EASE_SMOOTH }}
           >
             <div className="duotone">
               <img
@@ -561,6 +566,33 @@ function Founder() {
   );
 }
 
+function formatoData(data, ora) {
+  if (!data) return '';
+  const [vit, muaj, dite] = data.split('-').map(Number);
+  const d = new Date(vit, muaj - 1, dite);
+  let tekst = d.toLocaleDateString('sq-AL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  if (ora) tekst += `, ora ${ora}`;
+  return tekst;
+}
+
+// Ndërton rreshtat e mesazhit të WhatsApp. Në modalitetin `preview` përdor
+// tekste vend-mbajtëse për fushat e zbrazëta, që parapamja të mos jetë kurrë bosh.
+function buildRreshtat(values, { preview = false } = {}) {
+  const emri = values.emri.trim();
+  const sherbimi = values.sherbimi;
+  const dataFormatuar = formatoData(values.data, values.ora);
+  const mesazhi = values.mesazhi.trim();
+
+  const rreshtat = [
+    'Përshëndetje! Dua të rezervoj një konsultë.',
+    `• Emri: ${emri || (preview ? '…' : '')}`,
+    `• Shërbimi: ${sherbimi || (preview ? '…' : '')}`
+  ];
+  if (dataFormatuar) rreshtat.push(`• Data: ${dataFormatuar}`);
+  if (mesazhi) rreshtat.push(`• Mesazhi: ${mesazhi}`);
+  return rreshtat;
+}
+
 function Rezervime() {
   const [values, setValues] = useState({ emri: '', sherbimi: '', data: '', ora: '', mesazhi: '' });
   const [errors, setErrors] = useState({ emri: false, sherbimi: false });
@@ -570,14 +602,12 @@ function Rezervime() {
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: false }));
   };
 
-  const formatoData = (data, ora) => {
-    if (!data) return '';
-    const [vit, muaj, dite] = data.split('-').map(Number);
-    const d = new Date(vit, muaj - 1, dite);
-    let tekst = d.toLocaleDateString('sq-AL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    if (ora) tekst += `, ora ${ora}`;
-    return tekst;
-  };
+  // Parapamje "live" — përditësohet në kohë reale ndërsa plotësohet forma.
+  const previewLines = useMemo(() => buildRreshtat(values, { preview: true }), [values]);
+  const koha = useMemo(
+    () => new Date().toLocaleTimeString('sq-AL', { hour: '2-digit', minute: '2-digit' }),
+    []
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -588,17 +618,7 @@ function Rezervime() {
     setErrors(nextErrors);
     if (nextErrors.emri || nextErrors.sherbimi) return;
 
-    const dataFormatuar = formatoData(values.data, values.ora);
-    const mesazhi = values.mesazhi.trim();
-
-    const rreshtat = [
-      'Përshëndetje! Dua të rezervoj një konsultë.',
-      `• Emri: ${emri}`,
-      `• Shërbimi: ${sherbimi}`
-    ];
-    if (dataFormatuar) rreshtat.push(`• Data: ${dataFormatuar}`);
-    if (mesazhi) rreshtat.push(`• Mesazhi: ${mesazhi}`);
-
+    const rreshtat = buildRreshtat(values);
     const url = `https://wa.me/${WHATSAPP_NUMER}?text=${encodeURIComponent(rreshtat.join('\n'))}`;
     window.open(url, '_blank', 'noopener');
   };
@@ -627,6 +647,33 @@ function Rezervime() {
               <li className="rezervime-perk"><CheckCircle2 size={20} /> Përgjigje po atë ditë, jo pas javësh</li>
               <li className="rezervime-perk"><CheckCircle2 size={20} /> Plan konkret veprimi, jo premtime boshe</li>
             </motion.ul>
+
+            <motion.div variants={fadeUp} className="wa-preview" aria-hidden="true">
+              <div className="wa-preview-header">
+                <span className="wa-preview-avatar">
+                  <WhatsappIcon size={20} />
+                </span>
+                <div className="wa-preview-meta">
+                  <span className="wa-preview-name">Amai Marketing</span>
+                  <span className="wa-preview-status">online</span>
+                </div>
+                <span className="wa-preview-label">Parapamje</span>
+              </div>
+              <div className="wa-preview-body">
+                <div className="wa-preview-bubble">
+                  {previewLines.map((line, i) => (
+                    <span key={i} className="wa-preview-line">{line}</span>
+                  ))}
+                  <span className="wa-preview-time">
+                    {koha}
+                    <svg viewBox="0 0 18 12" width="16" height="11" fill="none" aria-hidden="true">
+                      <path d="M1 6.5 4 9.5 10 2.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M7 6.5 10 9.5 16 2.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
 
           <motion.form
@@ -770,14 +817,16 @@ function App() {
   useEffect(() => {
     const lenis = new Lenis({
       autoRaf: true,
-      duration: 1.2,
+      // Longer glide + gentle exponential ease-out for a calm, chill scroll.
+      duration: 1.6,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1,
+      // Slightly lighter wheel so scrolling feels soft rather than jumpy.
+      wheelMultiplier: 0.9,
       smoothTouch: false,
-      touchMultiplier: 2,
+      touchMultiplier: 1.8,
     });
 
     // Mbaje faqen në krye dhe ndalo scroll-in derisa intro-ja të mbarojë.

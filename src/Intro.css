@@ -50,14 +50,15 @@ body.intro-lock {
 .intro__mask {
   overflow: hidden;
   padding-bottom: 0.08em;
+  padding-top: 0.25em;
 }
 
 .intro__word {
-  font-family: var(--font-heading);
-  font-weight: 800;
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 400;
   font-size: clamp(3rem, 13vw, 9rem);
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   color: var(--red-800);
   display: inline-flex;
 }
@@ -73,14 +74,16 @@ body.intro-lock {
   color: var(--red-500);
 }
 
+
+
 @keyframes introRise {
   to { transform: translateY(0); }
 }
 
 .intro__sub {
   margin-top: clamp(8px, 1.4vw, 16px);
-  font-family: var(--font-heading);
-  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
   font-size: clamp(0.8rem, 2.2vw, 1.35rem);
   letter-spacing: 0.1em;
   color: var(--red-500);
@@ -136,7 +139,7 @@ body.intro-lock {
 @media (prefers-reduced-motion: reduce) {
   .intro { transition: opacity 0.2s linear; }
   .intro__word .ltr,
-  .intro__dot { transform: none; animation: none; }
+  .intro__dot { transform: none; animation: none; opacity: 1; }
   .intro__sub {
     opacity: 1; transform: none;
     letter-spacing: 0.42em; animation: none;
