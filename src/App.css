@@ -250,7 +250,7 @@
   display: none; /* Chrome/Safari */
 }
 
-.services-carousel .service-card {
+.services-carousel .service-card-scene {
   flex: 0 0 85%;
   max-width: 340px;
   scroll-snap-align: center;
@@ -262,7 +262,7 @@
     flex-wrap: wrap;
     overflow-x: visible;
   }
-  .services-carousel .service-card {
+  .services-carousel .service-card-scene {
     flex: 0 0 calc(50% - 10px);
     max-width: none;
   }
@@ -273,28 +273,51 @@
     flex-wrap: nowrap;
     justify-content: space-between;
   }
-  .services-carousel .service-card {
+  .services-carousel .service-card-scene {
     flex: 1;
   }
 }
 
+/* Skena jep thellësinë; karta rrotullohet brenda saj. */
+.service-card-scene {
+  perspective: 1000px;
+  height: 100%;
+}
+
 .service-card {
+  position: relative;
+  height: 100%;
   background: var(--white);
   border: 1px solid var(--border-color);
   border-radius: 18px;
   padding: 40px 32px;
-  transition: transform var(--transition-slow),
-              box-shadow var(--transition-slow),
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow var(--transition-slow),
               border-color var(--transition-slow);
 }
 
 .service-card:hover {
-  transform: translateY(-8px);
   box-shadow: var(--shadow-xl);
   border-color: var(--border-strong);
 }
 
-.service-icon {
+/* Reflektim drite që ndjek kursorin. */
+.service-card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.service-card:hover .service-card-glare {
+  opacity: 1;
+}
+
+/* Shtresat: sa më lart translateZ, aq më shumë del përpara elementi. */
+.service-card .service-icon {
   width: 56px;
   height: 56px;
   background-color: var(--red-50);
@@ -304,6 +327,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
+  transform: translateZ(48px);
   transition: background-color var(--transition-normal),
               color var(--transition-normal),
               transform var(--transition-normal);
@@ -312,7 +336,15 @@
 .service-card:hover .service-icon {
   background-color: var(--red-500);
   color: var(--white);
-  transform: scale(1.06) rotate(-4deg);
+  transform: translateZ(64px) scale(1.06) rotate(-4deg);
+}
+
+.service-card .service-title {
+  transform: translateZ(28px);
+}
+
+.service-card .service-desc {
+  transform: translateZ(14px);
 }
 
 .service-title {
@@ -323,6 +355,20 @@
 .service-desc {
   color: var(--text-muted);
   font-size: 0.95rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card,
+  .service-card .service-icon,
+  .service-card:hover .service-icon,
+  .service-card .service-title,
+  .service-card .service-desc {
+    transform: none;
+  }
+
+  .service-card-glare {
+    display: none;
+  }
 }
 
 /* Pse Ne */
@@ -975,15 +1021,13 @@
   background: var(--white);
   transition: color var(--transition-normal),
               border-color var(--transition-normal),
-              box-shadow var(--transition-normal),
-              transform var(--transition-normal);
+              box-shadow var(--transition-normal);
 }
 
 .client-logo:hover {
   color: var(--red-800);
   border-color: var(--border-strong);
   box-shadow: var(--shadow-md);
-  transform: translateY(-3px);
 }
 
 .client-logo .mark {
