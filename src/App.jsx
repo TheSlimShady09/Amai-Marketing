@@ -11,24 +11,37 @@ import {
 } from 'framer-motion';
 import {
   ArrowRight,
-  BarChart3,
   Smartphone,
-  Zap,
   Target,
   CheckCircle2,
   TrendingUp,
   Users,
+  Heart,
   Menu,
   X,
   Quote,
   Mail,
   Phone,
-  ChevronLeft,
-  ChevronRight
+  Palette,
+  Camera,
+  Video,
+  Megaphone,
+  MousePointerClick,
+  Code,
+  Search,
+  PenTool,
+  Coffee,
+  Sparkles,
+  Stethoscope,
+  ShoppingBag,
+  Building2,
+  Dumbbell
 } from 'lucide-react';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import Intro from './Intro.jsx';
+import ceoPhoto from './assets/ceo-photo.jpeg';
+import mainLogo from './assets/logo.png';
 import './App.css';
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -50,9 +63,74 @@ const viewportOnce = { once: true, margin: '-120px' };
 
 const NAV_LINKS = [
   { href: '#sherbimet', label: 'Shërbimet' },
+  { href: '#bizneset', label: 'Bizneset' },
   { href: '#pse-ne', label: 'Pse Ne' },
-  { href: '#rezultatet', label: 'Rezultatet' },
   { href: '#procesi', label: 'Procesi' }
+];
+
+// >>> ZËVENDËSO me llojet dhe bizneset reale që ke ndihmuar.
+const BIZNES_KATEGORITE = [
+  {
+    key: 'resto',
+    label: 'Restorante & Kafe',
+    icon: <Coffee size={18} />,
+    biznese: [
+      { name: 'Kafe Aroma', tag: 'Tiranë' },
+      { name: 'Trattoria Vera', tag: 'Durrës' },
+      { name: 'Bistro Nord', tag: 'Tiranë' },
+      { name: 'Lounge 24', tag: 'Vlorë' }
+    ]
+  },
+  {
+    key: 'estetike',
+    label: 'Estetikë & Bukuri',
+    icon: <Sparkles size={18} />,
+    biznese: [
+      { name: 'Nova Estetik', tag: 'Tiranë' },
+      { name: 'Studio Lumo', tag: 'Tiranë' },
+      { name: 'Glow Beauty Bar', tag: 'Durrës' }
+    ]
+  },
+  {
+    key: 'shendetesi',
+    label: 'Shëndetësi',
+    icon: <Stethoscope size={18} />,
+    biznese: [
+      { name: 'DentalCare Tirana', tag: 'Klinikë dentare' },
+      { name: 'Optika Vizion', tag: 'Tiranë' },
+      { name: 'Fizio Plus', tag: 'Fizioterapi' }
+    ]
+  },
+  {
+    key: 'retail',
+    label: 'Retail & Dyqane',
+    icon: <ShoppingBag size={18} />,
+    biznese: [
+      { name: 'Boutique Elegance', tag: 'Modë' },
+      { name: 'Fresh Market', tag: 'Ushqime' },
+      { name: 'TechNova', tag: 'Elektronikë' }
+    ]
+  },
+  {
+    key: 'ndertim',
+    label: 'Ndërtim & Pasuri',
+    icon: <Building2 size={18} />,
+    biznese: [
+      { name: 'BuildPro', tag: 'Ndërtim' },
+      { name: 'Klaros Group', tag: 'Pasuri të paluajtshme' },
+      { name: 'GreenGarden', tag: 'Peizazhe' }
+    ]
+  },
+  {
+    key: 'fitness',
+    label: 'Fitness & Sport',
+    icon: <Dumbbell size={18} />,
+    biznese: [
+      { name: 'UrbanFit', tag: 'Palestër' },
+      { name: 'AutoMax', tag: 'Auto & motorr' },
+      { name: 'Peak Studio', tag: 'Yoga & Pilates' }
+    ]
+  }
 ];
 
 // >>> ZËVENDËSO me numrin real të WhatsApp të biznesit,
@@ -64,10 +142,16 @@ const INSTAGRAM_URL = 'https://instagram.com/amaimarketing';
 const TIKTOK_URL = 'https://tiktok.com/@amaimarketing';
 
 const SHERBIMET = [
-  'Menaxhim Rrjetesh Sociale',
-  'Zhvillim Web',
-  'Automatizim Biznesi',
-  'Strategji Marketingu'
+  'Menaxhim i Rrjeteve Sociale',
+  'Branding & Identitet Vizual',
+  'Krijim Përmbajtjeje',
+  'Xhirim Spotesh & Reklamash',
+  'Meta Ads',
+  'Google Ads',
+  'Zhvillim Website',
+  'SEO',
+  'Strategji Marketingu',
+  'Dizajn Grafik'
 ];
 
 function WhatsappIcon({ size = 22 }) {
@@ -117,13 +201,13 @@ function Navbar() {
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="container">
         <a href="#" className="logo" onClick={() => setMenuOpen(false)}>
-          Amai Marketing<span>.</span>
+          <img src={mainLogo} alt="Amai Marketing Logo" style={{ height: '40px' }} />
         </a>
         <div className="nav-links">
           {NAV_LINKS.map(link => (
             <a key={link.href} href={link.href} className="nav-link">{link.label}</a>
           ))}
-          <a href="#kontakt" className="btn btn-primary" style={{ padding: '10px 20px' }}>
+          <a href="#kontakt" className="btn btn-primary" style={{ padding: '10px 20px', backgroundColor: 'var(--white)', color: 'var(--red-900)' }}>
             Konsultë Falas
           </a>
         </div>
@@ -150,7 +234,7 @@ function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a href="#kontakt" className="btn btn-primary" onClick={() => setMenuOpen(false)}>
+            <a href="#kontakt" className="btn btn-primary" onClick={() => setMenuOpen(false)} style={{ backgroundColor: 'var(--white)', color: 'var(--red-900)' }}>
               Konsultë Falas
             </a>
           </motion.div>
@@ -177,7 +261,7 @@ function Hero() {
               <AvatarDuotone src="https://i.pravatar.cc/100?img=2" alt="Klient" />
               <AvatarDuotone src="https://i.pravatar.cc/100?img=3" alt="Klient" />
             </span>
-            <span>50+ biznese të ndihmuara këtë vit</span>
+            <span>20+ biznese të ndihmuara këtë vit</span>
           </motion.div>
 
           <motion.h1
@@ -197,9 +281,6 @@ function Hero() {
             <a href="#kontakt" className="btn btn-primary">
               Merr Konsultë Falas <ArrowRight size={20} />
             </a>
-            <a href="#rezultatet" className="btn btn-outline">
-              Shiko Rezultatet
-            </a>
           </motion.div>
         </motion.div>
       </div>
@@ -207,47 +288,77 @@ function Hero() {
   );
 }
 
-function Clients() {
-  const rowOne = ['BuildPro', 'Boutique Elegance', 'DentalCare Tirana', 'Kafe Aroma', 'TechNova', 'Fresh Market'];
-  const rowTwo = ['Studio Lumo', 'AutoMax', 'GreenGarden', 'UrbanFit', 'Nova Estetik', 'Klaros Group'];
 
-  const Group = ({ items, hidden }) => (
-    <div className="clients-group" aria-hidden={hidden || undefined}>
-      {items.map(name => (
-        <span key={name} className="client-logo">
-          <span className="mark" aria-hidden="true" />
-          {name}
-        </span>
-      ))}
-    </div>
-  );
+
+function Bizneset() {
+  const [aktive, setAktive] = useState(BIZNES_KATEGORITE[0].key);
+  const kategoria = BIZNES_KATEGORITE.find(k => k.key === aktive);
 
   return (
-    <section id="klientet" className="clients">
+    <section id="bizneset" className="section">
       <div className="container">
-        <motion.p
-          className="clients-label"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+        <motion.div
+          className="section-header"
+          initial="hidden"
+          whileInView="visible"
           viewport={viewportOnce}
-          transition={{ duration: 0.6, ease: EASE }}
+          variants={fadeUp}
         >
-          Bizneset që <strong>na besojnë</strong>
-        </motion.p>
-      </div>
+          <h2 className="section-title">Bizneset që Ndihmojmë</h2>
+          <p className="section-subtitle">Zgjidh një lloj biznesi për të parë disa nga klientët tanë në atë fushë.</p>
+        </motion.div>
 
-      <div className="clients-marquee">
-        <div className="clients-track">
-          <Group items={rowOne} />
-          <Group items={rowOne} hidden />
-        </div>
-      </div>
+        <motion.div
+          className="biz-tabs"
+          role="tablist"
+          aria-label="Llojet e bizneseve"
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={fadeUp}
+        >
+          {BIZNES_KATEGORITE.map(kat => {
+            const zgjedhur = kat.key === aktive;
+            return (
+              <button
+                key={kat.key}
+                type="button"
+                role="tab"
+                aria-selected={zgjedhur}
+                aria-controls={`biz-panel-${kat.key}`}
+                className={`biz-tab${zgjedhur ? ' is-active' : ''}`}
+                onClick={() => setAktive(kat.key)}
+              >
+                <span className="biz-tab-icon">{kat.icon}</span>
+                {kat.label}
+                <span className="biz-tab-count">{kat.biznese.length}</span>
+              </button>
+            );
+          })}
+        </motion.div>
 
-      <div className="clients-marquee">
-        <div className="clients-track clients-track--reverse">
-          <Group items={rowTwo} />
-          <Group items={rowTwo} hidden />
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={kategoria.key}
+            id={`biz-panel-${kategoria.key}`}
+            role="tabpanel"
+            className="biz-grid"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: EASE }}
+          >
+            {kategoria.biznese.map(biz => (
+              <div key={biz.name} className="biz-card">
+                <span className="biz-mark" aria-hidden="true">{biz.name.charAt(0)}</span>
+                <div>
+                  <h3 className="biz-name">{biz.name}</h3>
+                  <p className="biz-tag">{biz.tag}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
@@ -307,23 +418,53 @@ function Services() {
   const services = [
     {
       icon: <Smartphone size={28} />,
-      title: 'Menaxhim Rrjetesh Sociale',
-      desc: 'Krijojmë përmbajtje që angazhon dhe kthen ndjekësit në blerës përmes strategjive të provuara në Instagram, TikTok dhe Facebook.'
+      title: 'Menaxhim i Rrjeteve Sociale',
+      desc: 'Krijojmë përmbajtje që angazhon dhe kthen ndjekësit në klientë përmes strategjive të personalizuara në Instagram, Facebook, TikTok dhe LinkedIn.'
     },
     {
-      icon: <Zap size={28} />,
-      title: 'Zhvillim Web Modern',
-      desc: 'Faqe interneti të shpejta, të optimizuara për celularë dhe të dizajnuara posaçërisht për të konvertuar vizitorët në lead-e.'
+      icon: <Palette size={28} />,
+      title: 'Branding & Identitet Vizual',
+      desc: 'Ndërtojmë identitete unike që e bëjnë markën të dallohet dhe të krijojë një imazh profesional e të qëndrueshëm.'
+    },
+    {
+      icon: <Camera size={28} />,
+      title: 'Krijim Përmbajtjeje',
+      desc: 'Realizojmë foto, Reels dhe materiale kreative që tregojnë historinë e markës dhe rrisin angazhimin.'
+    },
+    {
+      icon: <Video size={28} />,
+      title: 'Xhirim Spotesh & Reklamash',
+      desc: 'Produkojmë reklama profesionale, video promocionale dhe spote kreative që prezantojnë markën me cilësi të lartë në çdo platformë.'
+    },
+    {
+      icon: <Megaphone size={28} />,
+      title: 'Meta Ads',
+      desc: 'Menaxhojmë fushata reklamuese në Facebook dhe Instagram për të gjeneruar më shumë klientë, shitje dhe rezultate të matshme.'
+    },
+    {
+      icon: <MousePointerClick size={28} />,
+      title: 'Google Ads',
+      desc: 'Vendosim biznesin tënd përpara klientëve në momentin që ata kërkojnë produktet ose shërbimet që ofron.'
+    },
+    {
+      icon: <Code size={28} />,
+      title: 'Zhvillim Website',
+      desc: 'Krijojmë faqe interneti moderne, të shpejta dhe të optimizuara për një eksperiencë të shkëlqyer dhe konvertime më të larta.'
+    },
+    {
+      icon: <Search size={28} />,
+      title: 'SEO',
+      desc: 'Optimizojmë faqen tënde për motorët e kërkimit që biznesi yt të renditet më lart dhe të tërheqë më shumë trafik organik.'
     },
     {
       icon: <Target size={28} />,
-      title: 'Automatizim Biznesi',
-      desc: 'Kursejmë kohën tuaj duke automatizuar proceset e shitjes, dërgimin e emaileve dhe ndjekjen e klientëve potencialë.'
+      title: 'Strategji Marketingu',
+      desc: 'Analizojmë tregun dhe ndërtojmë strategji të personalizuara që ndihmojnë markën të rritet në mënyrë të qëndrueshme.'
     },
     {
-      icon: <BarChart3 size={28} />,
-      title: 'Strategji Marketingu',
-      desc: 'Analizojmë tregun dhe konkurrencën për të ndërtuar një plan veprimi 90-ditor që rrit ROI-në tuaj në mënyrë të parashikueshme.'
+      icon: <PenTool size={28} />,
+      title: 'Dizajn Grafik',
+      desc: 'Krijojmë materiale vizuale premium për rrjete sociale, reklama, print dhe çdo pikë kontakti me klientin, duke ruajtur një identitet të unifikuar.'
     }
   ];
 
@@ -357,6 +498,89 @@ function Services() {
   );
 }
 
+// Shtyllat e grafikut të rritjes (lartësi në %). Muaji i fundit = kulmi.
+const RRITJA_BARS = [34, 48, 43, 61, 74, 92];
+
+function MarketingVisual3D() {
+  const reduceMotion = useReducedMotion();
+
+  // 0..1 pozicioni i kursorit; 0.5/0.5 = qendra, ku skena rri në këndin bazë 3D.
+  const px = useMotionValue(0.5);
+  const py = useMotionValue(0.5);
+
+  // Këndi bazë isometrik + lëvizje sipas kursorit.
+  const rotateY = useSpring(useTransform(px, [0, 1], [-26, -2]), TILT_SPRING);
+  const rotateX = useSpring(useTransform(py, [0, 1], [18, -2]), TILT_SPRING);
+
+  const handlePointerMove = (event) => {
+    if (reduceMotion || event.pointerType !== 'mouse') return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    px.set((event.clientX - rect.left) / rect.width);
+    py.set((event.clientY - rect.top) / rect.height);
+  };
+
+  const recenter = () => {
+    px.set(0.5);
+    py.set(0.5);
+  };
+
+  const float = (delay) =>
+    reduceMotion
+      ? {}
+      : { animate: { y: [0, -12, 0] }, transition: { duration: 5, ease: 'easeInOut', repeat: Infinity, delay } };
+
+  return (
+    <motion.div
+      className="mv-scene"
+      onPointerMove={handlePointerMove}
+      onPointerLeave={recenter}
+      initial={{ opacity: 0, x: -36 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={viewportOnce}
+      transition={{ duration: 1.2, ease: EASE_SMOOTH }}
+    >
+      <motion.div className="mv-card" style={{ rotateX, rotateY }}>
+        <div className="mv-card-glow" aria-hidden="true" />
+
+        <div className="mv-card-head">
+          <div>
+            <span className="mv-card-label">Rritje mujore</span>
+            <strong className="mv-card-value">+240%</strong>
+          </div>
+          <span className="mv-card-trend"><TrendingUp size={16} /> ROI 3.8x</span>
+        </div>
+
+        <div className="mv-bars">
+          {RRITJA_BARS.map((h, i) => (
+            <motion.span
+              key={i}
+              className={`mv-bar${i === RRITJA_BARS.length - 1 ? ' is-peak' : ''}`}
+              initial={{ height: '8%' }}
+              whileInView={{ height: `${h}%` }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: EASE, delay: 0.15 * i }}
+            />
+          ))}
+        </div>
+
+        <div className="mv-axis">
+          <span>Jan</span><span>Shk</span><span>Mar</span><span>Pri</span><span>Maj</span><span>Qer</span>
+        </div>
+
+        <motion.div className="mv-chip mv-chip--like" style={{ translateZ: 95 }} {...float(0)}>
+          <Heart size={15} /> +1.2k
+        </motion.div>
+        <motion.div className="mv-chip mv-chip--follow" style={{ translateZ: 70 }} {...float(1.1)}>
+          <Users size={15} /> +854 ndjekës
+        </motion.div>
+        <motion.div className="mv-chip mv-chip--sale" style={{ translateZ: 82 }} {...float(0.6)}>
+          <TrendingUp size={15} /> 128 shitje
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function WhyUs() {
   const features = [
     {
@@ -380,18 +604,7 @@ function WhyUs() {
     <section id="pse-ne" className="section section-light">
       <div className="container">
         <div className="why-us-grid">
-          <motion.div
-            className="why-us-image duotone"
-            initial={{ opacity: 0, x: -36 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={viewportOnce}
-            transition={{ duration: 1.2, ease: EASE_SMOOTH }}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-              alt="Ekipi ynë duke punuar mbi një strategji marketingu"
-            />
-          </motion.div>
+          <MarketingVisual3D />
 
           <motion.div
             className="why-us-content"
@@ -422,62 +635,6 @@ function WhyUs() {
   );
 }
 
-function CaseStudies() {
-  return (
-    <section id="rezultatet" className="section" style={{ position: 'relative', overflow: 'hidden', minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
-      
-      {/* ZËVENDËSOJENI KËTË VIDEO ME VIDEON TUAJ 
-          Mund të ndryshoni 'src' me linkun e videos ose ta vendosni në dosjen public dhe ta thërrisni p.sh src="/video-ime.mp4" */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          zIndex: 0
-        }}
-        src="/rruga-e-videos-suaj.mp4"
-        poster="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-      />
-      
-      {/* Overlay për të bërë tekstin më të lexueshëm */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'var(--red-900)',
-        opacity: 0.75,
-        zIndex: 1,
-        mixBlendMode: 'multiply'
-      }}></div>
-
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-        <motion.div
-          className="section-header"
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          variants={fadeUp}
-          style={{ marginBottom: 0 }}
-        >
-          <h2 className="section-title" style={{ color: 'var(--white)' }}>Rezultate që Flasin Vetë</h2>
-          <p className="section-subtitle" style={{ color: 'var(--red-100)' }}>
-            Shikoni si kemi ndihmuar biznese të ngjashme me tuajin të shkallëzohen. <br/>
-            (Videon tuaj mund ta zëvendësoni në kod tek skedari App.jsx)
-          </p>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
 
 function Process() {
   const steps = [
@@ -522,6 +679,7 @@ function Process() {
 }
 
 function Testimonials() {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const testimonials = [
     {
       text: 'Amai Marketing ndryshoi plotësisht mënyrën se si gjenerojmë klientë. Faqja e re që na ndërtuan pagoi veten brenda muajit të parë.',
@@ -534,8 +692,22 @@ function Testimonials() {
       author: 'Enisa M.',
       role: 'Menaxhere, Boutique Elegance',
       avatar: 'https://i.pravatar.cc/150?img=5'
+    },
+    {
+      text: "Rezultatet flasin vetë. Ekipi është shumë i përkushtuar dhe na ndihmoi të rrisim shitjet me 40% brenda 2 muajve.",
+      author: 'Sokol D.',
+      role: 'CEO, TechNova',
+      avatar: 'https://i.pravatar.cc/150?img=8'
+    },
+    {
+      text: "Dizajni i ri dhe strategjia e rrjeteve sociale i dha një frymë të re brandit tonë. Jemi shumë të kënaqur me ROI-në!",
+      author: 'Bora L.',
+      role: 'Drejtoreshë, Studio Lumo',
+      avatar: 'https://i.pravatar.cc/150?img=9'
     }
   ];
+
+  const current = testimonials[currentIndex];
 
   return (
     <section className="section section-drench">
@@ -550,27 +722,45 @@ function Testimonials() {
           <h2 className="section-title">Çfarë thonë klientët tanë</h2>
         </motion.div>
 
-        <motion.div
-          className="testimonials-grid"
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          variants={stagger}
-        >
-          {testimonials.map(item => (
-            <motion.div key={item.author} variants={fadeUp} className="testimonial-card">
-              <Quote className="quote-icon" size={44} />
-              <p className="testimonial-text">"{item.text}"</p>
-              <div className="testimonial-author">
-                <AvatarDuotone src={item.avatar} alt={item.author} />
-                <div>
-                  <div className="author-name">{item.author}</div>
-                  <div className="author-role">{item.role}</div>
+        <div className="testimonials-slideshow" style={{ maxWidth: '800px', margin: '0 auto', position: 'relative' }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.35, ease: EASE_SMOOTH }}
+              className="testimonial-card"
+              style={{ display: 'flex', flexDirection: 'column', minHeight: '280px', justifyContent: 'center' }}
+            >
+              <Quote className="quote-icon" size={44} style={{ margin: '0 auto 24px', opacity: 0.2 }} />
+              <p className="testimonial-text" style={{ textAlign: 'center', fontSize: '1.15rem', marginBottom: '32px' }}>"{current.text}"</p>
+              <div className="testimonial-author" style={{ justifyContent: 'center' }}>
+                <AvatarDuotone src={current.avatar} alt={current.author} />
+                <div style={{ textAlign: 'left' }}>
+                  <div className="author-name">{current.author}</div>
+                  <div className="author-role">{current.role}</div>
                 </div>
               </div>
             </motion.div>
-          ))}
-        </motion.div>
+          </AnimatePresence>
+          
+          <div className="slideshow-dots" style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '32px' }}>
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                style={{
+                  width: '10px', height: '10px', borderRadius: '50%',
+                  background: currentIndex === idx ? 'var(--red-900)' : 'var(--red-200)',
+                  border: 'none', cursor: 'pointer',
+                  transition: 'background 0.3s'
+                }}
+                aria-label={`Shko te dëshmia ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -590,12 +780,12 @@ function Founder() {
           >
             <div className="duotone">
               <img
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80"
+                src={ceoPhoto}
                 alt="Portret i themeluesit të AMAI Marketing"
                 loading="lazy"
               />
             </div>
-            <div className="founder-badge">Themelues <span>&amp;</span> Drejtor</div>
+            <div className="founder-badge">CEO</div>
           </motion.div>
 
           <motion.div
@@ -605,28 +795,32 @@ function Founder() {
             viewport={viewportOnce}
             variants={stagger}
           >
-            <motion.p variants={fadeUp} className="founder-eyebrow">Themeluesi</motion.p>
+            <motion.p variants={fadeUp} className="founder-eyebrow">CEO</motion.p>
 
             <motion.blockquote variants={fadeUp} className="founder-quote">
-              E ndërtova AMAI me një bindje të thjeshtë: çdo biznes lokal meriton <span>të njëjtin marketing</span> që përdorin markat e mëdha.
+              E ndërtova AMAI me një bindje të thjeshtë: çdo biznes meriton të dallohet, të frymëzojë besim dhe të rritet përmes <span>marketingut të duhur</span>.
             </motion.blockquote>
 
             <motion.p variants={fadeUp} className="founder-text">
-              Pas viteve duke parë biznese të shkëlqyera që humbisnin klientë vetëm sepse s'kishin praninë e duhur online, vendosa të krijoj një agjenci që flet gjuhën e pronarit — jo terma boshe, por shitje reale. Sot e ndihmoj çdo klient me të njëjtin kujdes sikur biznesi të ishte imi.
+              Besoj se marketingu nuk ka të bëjë vetëm me postime të bukura apo reklama. Ka të bëjë me ndërtimin e një identiteti që njerëzit e kujtojnë, me krijimin e besimit dhe me kthimin e vizitorëve në klientë besnikë.
+            </motion.p>
+
+            <motion.p variants={fadeUp} className="founder-text">
+              Sot, çdo projekt trajtohet me të njëjtin përkushtim sikur të ishte biznesi ynë. Punojmë afër klientëve tanë, kuptojmë objektivat e tyre dhe krijojmë zgjidhje që kanë ndikim real në rritjen e biznesit.
             </motion.p>
 
             <motion.div variants={fadeUp} className="founder-sign">
               <div>
-                <div className="founder-name">Aleks Malaj</div>
-                <div className="founder-role">Themelues &amp; Drejtor, AMAI Marketing</div>
+                <div className="founder-name">Egi Kormaku</div>
+                <div className="founder-role">CEO, AMAI Marketing</div>
               </div>
               <div className="founder-stats">
                 <div>
-                  <div className="founder-stat-value">50+</div>
+                  <div className="founder-stat-value">20+</div>
                   <div className="founder-stat-label">Biznese</div>
                 </div>
                 <div>
-                  <div className="founder-stat-value">6+</div>
+                  <div className="founder-stat-value">4+</div>
                   <div className="founder-stat-label">Vite përvojë</div>
                 </div>
               </div>
@@ -708,7 +902,7 @@ function Rezervime() {
           >
             <motion.p variants={fadeUp} className="founder-eyebrow">Rezervime</motion.p>
             <motion.h2 variants={fadeUp} className="section-title" style={{ textAlign: 'left', marginBottom: '18px' }}>
-              Rezervo konsultën tënde <span style={{ color: 'var(--red-500)' }}>falas</span>
+              Rezervo konsultën tënde <span style={{ color: 'var(--red-900)' }}>falas</span>
             </motion.h2>
             <motion.p variants={fadeUp} className="rezervime-lead">
               Plotëso formën dhe dërgoje direkt në WhatsApp. Të përgjigjemi po atë ditë me hapat konkretë për biznesin tënd.
@@ -719,33 +913,6 @@ function Rezervime() {
               <li className="rezervime-perk"><CheckCircle2 size={20} /> Përgjigje po atë ditë, jo pas javësh</li>
               <li className="rezervime-perk"><CheckCircle2 size={20} /> Plan konkret veprimi, jo premtime boshe</li>
             </motion.ul>
-
-            <motion.div variants={fadeUp} className="wa-preview" aria-hidden="true">
-              <div className="wa-preview-header">
-                <span className="wa-preview-avatar">
-                  <WhatsappIcon size={20} />
-                </span>
-                <div className="wa-preview-meta">
-                  <span className="wa-preview-name">Amai Marketing</span>
-                  <span className="wa-preview-status">online</span>
-                </div>
-                <span className="wa-preview-label">Parapamje</span>
-              </div>
-              <div className="wa-preview-body">
-                <div className="wa-preview-bubble">
-                  {previewLines.map((line, i) => (
-                    <span key={i} className="wa-preview-line">{line}</span>
-                  ))}
-                  <span className="wa-preview-time">
-                    {koha}
-                    <svg viewBox="0 0 18 12" width="16" height="11" fill="none" aria-hidden="true">
-                      <path d="M1 6.5 4 9.5 10 2.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M7 6.5 10 9.5 16 2.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </div>
-              </div>
-            </motion.div>
           </motion.div>
 
           <motion.form
@@ -837,9 +1004,11 @@ function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <h2 className="logo">Amai Marketing<span>.</span></h2>
+            <h2 className="logo" style={{ marginBottom: '16px' }}>
+              <img src={mainLogo} alt="Amai Marketing Logo" style={{ height: '40px' }} />
+            </h2>
             <p className="footer-desc">
-              Agjenci e specializuar në rritjen e bizneseve përmes strategjive të provuara dixhitale, dizajnit të web-it dhe automatizimeve.
+              Ndërtojmë marka që dallohen, krijojmë strategji që funksionojnë dhe zhvillojmë eksperienca dixhitale që sjellin rezultate reale
             </p>
             <div className="social-links">
               <a
@@ -894,12 +1063,15 @@ function Footer() {
           </div>
         </div>
 
-        <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Amai Marketing. Të gjitha të drejtat e rezervuara.</p>
-          <div className="social-links">
-            <a href="#" className="social-link" style={{ fontSize: '0.875rem' }}>Kushtet e Përdorimit</a>
-            <a href="#" className="social-link" style={{ fontSize: '0.875rem' }}>Privatësia</a>
+        <div className="footer-bottom" style={{ flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap', gap: '16px' }}>
+            <p>&copy; {new Date().getFullYear()} Amai Marketing. Të gjitha të drejtat e rezervuara.</p>
+            <div className="social-links">
+              <a href="#" className="social-link" style={{ fontSize: '0.875rem' }}>Kushtet e Përdorimit</a>
+              <a href="#" className="social-link" style={{ fontSize: '0.875rem' }}>Privatësia</a>
+            </div>
           </div>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '16px' }}>powered by neolink</p>
         </div>
       </div>
     </footer>
@@ -944,10 +1116,9 @@ function App() {
       <Navbar />
       <main style={{ paddingTop: '80px' }}>
         <Hero />
-        <Clients />
         <Services />
+        <Bizneset />
         <WhyUs />
-        <CaseStudies />
         <Process />
         <Testimonials />
         <Founder />

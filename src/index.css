@@ -6,15 +6,15 @@
   --red-50: #FFF4F4;
   --red-100: #FBE2E2;
   --red-200: #F4C2C3;
-  --red-500: #C1121F;
+  --red-900: #C1121F;
   --red-600: #A50D18;
   --red-700: #8C0A12;
   --red-800: #780001;
   --red-900: #4A0406;
   --red-950: #330203;
 
-  --primary: var(--red-500);
-  --primary-hover: var(--red-700);
+  --primary: var(--red-900);
+  --primary-hover: var(--red-950);
   --primary-soft: var(--red-50);
 
   --text-main: #2E0405;
@@ -89,12 +89,12 @@ img {
 }
 
 ::selection {
-  background-color: var(--red-500);
+  background-color: var(--red-900);
   color: var(--white);
 }
 
 :focus-visible {
-  outline: 3px solid var(--red-500);
+  outline: 3px solid var(--red-900);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -206,7 +206,7 @@ img {
 }
 
 .btn-white:hover {
-  color: var(--red-500);
+  color: var(--red-900);
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(51, 2, 3, 0.35);
 }
