@@ -563,9 +563,9 @@
 
 .biz-mark {
   flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
   background: var(--red-50);
   color: var(--red-900);
   display: flex;
@@ -573,7 +573,7 @@
   justify-content: center;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
 }
 
 .biz-name {

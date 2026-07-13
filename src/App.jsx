@@ -77,7 +77,7 @@ const BIZNES_KATEGORITE = [
     label: 'Estetikë & Bukuri',
     icon: <Sparkles size={18} />,
     biznese: [
-      { id: 'lunea', emri: 'LUNÉA', logo: '/lunea.png' }
+      { id: 'lunea', emri: 'LUNÉA', logo: null }
     ]
   },
   {
@@ -91,7 +91,7 @@ const BIZNES_KATEGORITE = [
     label: 'Retail & Dyqane',
     icon: <ShoppingBag size={18} />,
     biznese: [
-      { id: 'dolce-casa', emri: 'Dolce Casa', logo: '/dolce-casa.png' }
+      { id: 'dolce-casa', emri: 'Dolce Casa', logo: null }
     ]
   },
   {
@@ -99,7 +99,7 @@ const BIZNES_KATEGORITE = [
     label: 'Ndërtim & Pasuri',
     icon: <Building2 size={18} />,
     biznese: [
-      { id: 'hidros', emri: 'Hidros', logo: '/hidros.png' }
+      { id: 'hidros', emri: 'Hidros', logo: null }
     ]
   },
   {
