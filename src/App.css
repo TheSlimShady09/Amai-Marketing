@@ -1882,3 +1882,12 @@
     border-radius: 20px;
   }
 }
+
+@media (max-width: 768px) {
+  .rz-row-mobile-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+}
+

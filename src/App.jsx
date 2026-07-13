@@ -1022,13 +1022,9 @@ function Rezervime() {
 
             <div className="rz-field">
               <label className="rz-label" htmlFor="data">Data e preferuar <span className="rz-opt">(opsionale)</span></label>
-              <div className="rz-row" style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
-                <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
-                  <input id="data" type="date" className="rz-control" value={values.data} onChange={update('data')} style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', fontSize: '16px' }} />
-                </div>
-                <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
-                  <input id="ora" type="time" className="rz-control" value={values.ora} onChange={update('ora')} aria-label="Ora e preferuar" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', fontSize: '16px' }} />
-                </div>
+              <div className="rz-row rz-row-mobile-stack">
+                <input id="data" type="date" className="rz-control" value={values.data} onChange={update('data')} />
+                <input id="ora" type="time" className="rz-control" value={values.ora} onChange={update('ora')} aria-label="Ora e preferuar" />
               </div>
             </div>
 
