@@ -1133,6 +1133,7 @@
 }
 
 .rz-control {
+  box-sizing: border-box;
   width: 100%;
   font-family: var(--font-body);
   font-size: 1rem;
@@ -1189,6 +1190,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+}
+
+.rz-row > * {
+  min-width: 0;
 }
 
 .btn-whatsapp {
