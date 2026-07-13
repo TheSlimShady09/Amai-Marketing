@@ -748,7 +748,7 @@ function Testimonials() {
           <h2 className="section-title">Çfarë thonë klientët tanë</h2>
         </motion.div>
 
-        <div className="testimonials-slideshow" style={{ maxWidth: '800px', margin: '0 auto', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '380px' }}>
+        <div className="testimonials-slideshow-v2">
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
               key={page}
@@ -792,19 +792,18 @@ function Testimonials() {
                   paginate(-1);
                 }
               }}
-              className="testimonial-card"
-              style={{ position: 'absolute', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'grab', background: 'var(--bg-white)', padding: '40px', borderRadius: '24px', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}
+              className="testimonial-card-v2"
               whileTap={{ cursor: 'grabbing' }}
             >
-              <div style={{ display: 'flex', gap: '6px', marginBottom: '24px', color: '#FBBF24' }}>
+              <div className="testimonial-stars">
                 {[...Array(5)].map((_, i) => (
                   <svg key={i} width="28" height="28" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                 ))}
               </div>
-              <p className="testimonial-text" style={{ textAlign: 'center', fontSize: '1.25rem', marginBottom: '32px', maxWidth: '650px', lineHeight: 1.7, color: 'var(--text-main)' }}>"{current.text}"</p>
-              <div className="testimonial-author" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <p className="testimonial-text-v2">"{current.text}"</p>
+              <div className="testimonial-author">
                 <AvatarDuotone src={current.avatar} alt={current.author} />
-                <div className="author-name" style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '1.1rem', marginLeft: '16px' }}>{current.author}</div>
+                <div className="author-name-v2">{current.author}</div>
               </div>
             </motion.div>
           </AnimatePresence>
