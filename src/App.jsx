@@ -412,7 +412,7 @@ function ServiceCard({ service }) {
   };
 
   return (
-    <motion.div variants={fadeUp} className="service-card-scene">
+    <div className="service-card-scene" style={{ width: '100%', height: '100%' }}>
       <motion.article
         className="service-card"
         style={{ rotateX, rotateY }}
@@ -425,11 +425,13 @@ function ServiceCard({ service }) {
         <h3 className="service-title">{service.title}</h3>
         <p className="service-desc">{service.desc}</p>
       </motion.article>
-    </motion.div>
+    </div>
   );
 }
 
 function Services() {
+  const [[page, direction], setPage] = useState([0, 0]);
+
   const services = [
     {
       icon: <Smartphone size={28} />,
@@ -483,8 +485,20 @@ function Services() {
     }
   ];
 
+  const imageIndex = ((page % services.length) + services.length) % services.length;
+  const current = services[imageIndex];
+
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
+  };
+
+  const swipeConfidenceThreshold = 50;
+  const swipePower = (offset, velocity) => {
+    return offset;
+  };
+
   return (
-    <section id="sherbimet" className="section section-tint">
+    <section id="sherbimet" className="section section-tint" style={{ overflow: 'hidden' }}>
       <div className="container">
         <motion.div
           className="section-header"
@@ -497,17 +511,75 @@ function Services() {
           <p className="section-subtitle">Gjithçka që i duhet biznesit tënd për të dominuar tregun dixhital, në një vend të vetëm.</p>
         </motion.div>
 
-        <motion.div
-          className="services-carousel"
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          variants={stagger}
-        >
-          {services.map(service => (
-            <ServiceCard key={service.title} service={service} />
-          ))}
-        </motion.div>
+        <div className="testimonials-slideshow-v2" style={{ maxWidth: '600px' }}>
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={page}
+              custom={direction}
+              variants={{
+                enter: (direction) => ({
+                  x: direction > 0 ? 800 : -800,
+                  opacity: 0,
+                  scale: 0.95
+                }),
+                center: {
+                  zIndex: 1,
+                  x: 0,
+                  opacity: 1,
+                  scale: 1
+                },
+                exit: (direction) => ({
+                  zIndex: 0,
+                  x: direction < 0 ? 800 : -800,
+                  opacity: 0,
+                  scale: 0.95
+                })
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.3 },
+                scale: { duration: 0.3 }
+              }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+                if (swipe < -swipeConfidenceThreshold) paginate(1);
+                else if (swipe > swipeConfidenceThreshold) paginate(-1);
+              }}
+              className="testimonial-card-v2"
+              style={{ padding: 0, background: 'transparent', boxShadow: 'none' }}
+              whileTap={{ cursor: 'grabbing' }}
+            >
+              <ServiceCard service={current} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div className="slideshow-controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px', marginTop: '48px', position: 'relative', zIndex: 10 }}>
+          <div className="slideshow-dots" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {services.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  const newDirection = idx > imageIndex ? 1 : -1;
+                  setPage([page + (idx - imageIndex), newDirection]);
+                }}
+                style={{
+                  width: '12px', height: '12px', borderRadius: '50%',
+                  background: imageIndex === idx ? 'var(--red-900)' : 'var(--red-200)',
+                  border: 'none', cursor: 'pointer',
+                  transition: 'background 0.3s'
+                }}
+                aria-label={`Shko te shërbimi ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -1139,7 +1211,7 @@ function Footer() {
               <a href="#" className="social-link" style={{ fontSize: '0.875rem' }}>Privatësia</a>
             </div>
           </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '16px' }}>powered by neolink</p>
+          <a href="https://neolink.al" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '16px', display: 'block', textDecoration: 'none' }}>powered by neolink</a>
         </div>
       </div>
     </footer>
