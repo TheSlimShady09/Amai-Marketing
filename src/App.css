@@ -1032,6 +1032,37 @@
   }
 }
 
+.slideshow-controls-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 48px;
+  position: relative;
+  z-index: 10;
+}
+
+.slideshow-dots {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.slideshow-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--red-200);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.slideshow-dot.active {
+  background: var(--red-900);
+}
+
 .slider-arrow {
   display: flex;
   align-items: center;
@@ -1053,6 +1084,30 @@
   color: var(--red-900);
   border-color: var(--red-200);
   transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .slideshow-controls-wrapper {
+    gap: 12px;
+  }
+  .slideshow-dots {
+    gap: 6px;
+  }
+  .slideshow-dot {
+    width: 8px;
+    height: 8px;
+  }
+  .slider-arrow {
+    width: 36px;
+    height: 36px;
+  }
+  .slider-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+  .testimonials-slideshow-v2 {
+    height: 420px; /* Shtohet lartësia për tekstet e gjata të shërbimeve në telefon */
+  }
 }
 
 /* CTA */

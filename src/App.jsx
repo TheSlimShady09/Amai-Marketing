@@ -519,11 +519,11 @@ function Services() {
           </AnimatePresence>
         </div>
 
-        <div className="slideshow-controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px', marginTop: '48px', position: 'relative', zIndex: 10 }}>
+        <div className="slideshow-controls-wrapper">
           <button onClick={() => paginate(-1)} className="slider-arrow" aria-label="Prapa">
             <ChevronLeft size={24} />
           </button>
-          <div className="slideshow-dots" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div className="slideshow-dots">
             {services.map((_, idx) => (
               <button
                 key={idx}
@@ -531,12 +531,7 @@ function Services() {
                   const newDirection = idx > imageIndex ? 1 : -1;
                   setPage([page + (idx - imageIndex), newDirection]);
                 }}
-                style={{
-                  width: '12px', height: '12px', borderRadius: '50%',
-                  background: imageIndex === idx ? 'var(--red-900)' : 'var(--red-200)',
-                  border: 'none', cursor: 'pointer',
-                  transition: 'background 0.3s'
-                }}
+                className={`slideshow-dot ${imageIndex === idx ? 'active' : ''}`}
                 aria-label={`Shko te shërbimi ${idx + 1}`}
               />
             ))}
@@ -846,11 +841,11 @@ function Testimonials() {
           </AnimatePresence>
         </div>
           
-        <div className="slideshow-controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px', marginTop: '48px', position: 'relative', zIndex: 10 }}>
+        <div className="slideshow-controls-wrapper">
           <button onClick={() => paginate(-1)} className="slider-arrow" aria-label="Prapa">
             <ChevronLeft size={24} />
           </button>
-          <div className="slideshow-dots" style={{ display: 'flex', gap: '10px' }}>
+          <div className="slideshow-dots">
             {testimonials.map((_, idx) => (
               <button
                 key={idx}
@@ -858,12 +853,7 @@ function Testimonials() {
                   const newDirection = idx > imageIndex ? 1 : -1;
                   setPage([page + (idx - imageIndex), newDirection]);
                 }}
-                style={{
-                  width: '12px', height: '12px', borderRadius: '50%',
-                  background: imageIndex === idx ? 'var(--red-900)' : 'var(--red-200)',
-                  border: 'none', cursor: 'pointer',
-                  transition: 'background 0.3s'
-                }}
+                className={`slideshow-dot ${imageIndex === idx ? 'active' : ''}`}
                 aria-label={`Shko te dëshmia ${idx + 1}`}
               />
             ))}
