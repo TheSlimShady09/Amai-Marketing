@@ -694,38 +694,49 @@ function Process() {
 }
 
 function Testimonials() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [[page, direction], setPage] = useState([0, 0]);
+
   const testimonials = [
     {
-      text: 'Amai Marketing ndryshoi plotësisht mënyrën se si gjenerojmë klientë. Faqja e re që na ndërtuan pagoi veten brenda muajit të parë.',
-      author: 'Arben H.',
-      role: 'Themelues, BuildPro',
+      text: "Nuk mendoja kurrë që rrjetet sociale mund të sillnin kaq shumë shitje reale. Amai Marketing jo vetëm na rriti ndjekësit, por na solli klientë që blejnë. ROI i fushatave ka qenë i jashtëzakonshëm.",
+      author: 'Arben Hoxha',
+      role: 'Pronar, Hidros Albania',
       avatar: 'https://i.pravatar.cc/150?img=11'
     },
     {
-      text: "Profesionalizëm nga dita e parë. U rritëm me 30% në ndjekës dhe engagement-i është më i lartë se kurrë.",
-      author: 'Enisa M.',
-      role: 'Menaxhere, Boutique Elegance',
+      text: "Kemi provuar disa agjenci më parë, por Amai bëri diferencën me përkushtimin dhe transparencën. Çdo muaj kemi raportim të detajuar dhe strategji të reja që i përshtaten tregut tonë.",
+      author: 'Enisa Mehmeti',
+      role: 'Menaxhere, Dolce Casa',
       avatar: 'https://i.pravatar.cc/150?img=5'
     },
     {
-      text: "Rezultatet flasin vetë. Ekipi është shumë i përkushtuar dhe na ndihmoi të rrisim shitjet me 40% brenda 2 muajve.",
-      author: 'Sokol D.',
-      role: 'CEO, TechNova',
+      text: "Faqja e re që na ndërtuan është e jashtëzakonshme! Funksionon shpejt dhe ka dyfishuar numrin e rezervimeve që marrim online krahasuar me faqen e vjetër.",
+      author: 'Erald Duka',
+      role: 'Drejtor, LUNÉA Estetikë',
       avatar: 'https://i.pravatar.cc/150?img=8'
     },
     {
-      text: "Dizajni i ri dhe strategjia e rrjeteve sociale i dha një frymë të re brandit tonë. Jemi shumë të kënaqur me ROI-në!",
-      author: 'Bora L.',
-      role: 'Drejtoreshë, Studio Lumo',
+      text: "Kreativiteti në xhirimet e videove dhe fotove ka bërë që brandi ynë të duket shumë premium. Komunikimi është gjithmonë i shpejtë dhe efikas.",
+      author: 'Bora Leka',
+      role: 'Themeluese, Studio Lumo',
       avatar: 'https://i.pravatar.cc/150?img=9'
     }
   ];
 
-  const current = testimonials[currentIndex];
+  const imageIndex = ((page % testimonials.length) + testimonials.length) % testimonials.length;
+  const current = testimonials[imageIndex];
+
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
+  };
+
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset, velocity) => {
+    return Math.abs(offset) * velocity;
+  };
 
   return (
-    <section className="section section-drench">
+    <section className="section section-drench" style={{ overflow: 'hidden' }}>
       <div className="container">
         <motion.div
           className="section-header"
@@ -737,37 +748,86 @@ function Testimonials() {
           <h2 className="section-title">Çfarë thonë klientët tanë</h2>
         </motion.div>
 
-        <div className="testimonials-slideshow" style={{ maxWidth: '800px', margin: '0 auto', position: 'relative' }}>
-          <AnimatePresence mode="wait">
+        <div className="testimonials-slideshow" style={{ maxWidth: '800px', margin: '0 auto', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '380px' }}>
+          <AnimatePresence initial={false} custom={direction}>
             <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.35, ease: EASE_SMOOTH }}
+              key={page}
+              custom={direction}
+              variants={{
+                enter: (direction) => ({
+                  x: direction > 0 ? 800 : -800,
+                  opacity: 0,
+                  scale: 0.95
+                }),
+                center: {
+                  zIndex: 1,
+                  x: 0,
+                  opacity: 1,
+                  scale: 1
+                },
+                exit: (direction) => ({
+                  zIndex: 0,
+                  x: direction < 0 ? 800 : -800,
+                  opacity: 0,
+                  scale: 0.95
+                })
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.3 },
+                scale: { duration: 0.3 }
+              }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+
+                if (swipe < -swipeConfidenceThreshold) {
+                  paginate(1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(-1);
+                }
+              }}
               className="testimonial-card"
-              style={{ display: 'flex', flexDirection: 'column', minHeight: '280px', justifyContent: 'center' }}
+              style={{ position: 'absolute', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'grab', background: 'var(--surface)', padding: '40px', borderRadius: '24px', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}
+              whileTap={{ cursor: 'grabbing' }}
             >
-              <Quote className="quote-icon" size={44} style={{ margin: '0 auto 24px', opacity: 0.2 }} />
-              <p className="testimonial-text" style={{ textAlign: 'center', fontSize: '1.15rem', marginBottom: '32px' }}>"{current.text}"</p>
-              <div className="testimonial-author" style={{ justifyContent: 'center' }}>
+              <div style={{ display: 'flex', gap: '6px', marginBottom: '24px', color: '#FBBF24' }}>
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} width="28" height="28" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                ))}
+              </div>
+              <p className="testimonial-text" style={{ textAlign: 'center', fontSize: '1.25rem', marginBottom: '32px', maxWidth: '650px', lineHeight: 1.7, color: 'var(--text-strong)' }}>"{current.text}"</p>
+              <div className="testimonial-author" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <AvatarDuotone src={current.avatar} alt={current.author} />
-                <div style={{ textAlign: 'left' }}>
-                  <div className="author-name">{current.author}</div>
-                  <div className="author-role">{current.role}</div>
+                <div style={{ textAlign: 'left', marginLeft: '16px' }}>
+                  <div className="author-name" style={{ fontWeight: 700, color: 'var(--text-strong)', fontSize: '1.1rem' }}>{current.author}</div>
+                  <div className="author-role" style={{ fontSize: '0.95rem', color: 'var(--text-muted)' }}>{current.role}</div>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
+        </div>
           
-          <div className="slideshow-dots" style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '32px' }}>
+        <div className="slideshow-controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px', marginTop: '48px', position: 'relative', zIndex: 10 }}>
+          <button onClick={() => paginate(-1)} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '50%', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-strong)', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <div className="slideshow-dots" style={{ display: 'flex', gap: '10px' }}>
             {testimonials.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setCurrentIndex(idx)}
+                onClick={() => {
+                  const newDirection = idx > imageIndex ? 1 : -1;
+                  setPage([page + (idx - imageIndex), newDirection]);
+                }}
                 style={{
-                  width: '10px', height: '10px', borderRadius: '50%',
-                  background: currentIndex === idx ? 'var(--red-900)' : 'var(--red-200)',
+                  width: '12px', height: '12px', borderRadius: '50%',
+                  background: imageIndex === idx ? 'var(--red-900)' : 'var(--red-200)',
                   border: 'none', cursor: 'pointer',
                   transition: 'background 0.3s'
                 }}
@@ -775,6 +835,9 @@ function Testimonials() {
               />
             ))}
           </div>
+          <button onClick={() => paginate(1)} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '50%', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-strong)', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
         </div>
       </div>
     </section>
