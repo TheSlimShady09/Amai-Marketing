@@ -1282,6 +1282,18 @@
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  .rz-row-v2 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .rz-control-date {
+    text-align: left;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
 .btn-whatsapp {
   width: 100%;
   margin-top: 6px;
