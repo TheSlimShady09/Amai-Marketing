@@ -347,33 +347,33 @@
 }
 
 .services-carousel {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: 1fr;
+  display: flex;
   gap: 20px;
   padding: 10px 0 40px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.services-carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .services-carousel .service-card-scene {
-  width: 100%;
+  flex: 0 0 85%;
+  scroll-snap-align: start;
 }
 
 @media (min-width: 768px) {
-  /* Grid me rreshta të barabartë => të gjitha kutitë njëlloj të mëdha. */
-  .services-carousel {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 1fr;
-    overflow-x: visible;
-  }
   .services-carousel .service-card-scene {
-    max-width: none;
+    flex: 0 0 calc(50% - 10px);
   }
 }
 
 @media (min-width: 1024px) {
-  .services-carousel {
-    grid-template-columns: repeat(3, 1fr);
+  .services-carousel .service-card-scene {
+    flex: 0 0 calc(33.333% - 14px);
   }
 }
 
@@ -1188,14 +1188,20 @@
   min-height: 92px;
 }
 
-.rz-row {
+.rz-row-v2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 8px;
 }
 
-.rz-row > * {
+.rz-row-v2 > * {
   min-width: 0;
+}
+
+.rz-control-date {
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  text-align: center;
 }
 
 .btn-whatsapp {

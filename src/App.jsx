@@ -1022,9 +1022,9 @@ function Rezervime() {
 
             <div className="rz-field">
               <label className="rz-label" htmlFor="data">Data e preferuar <span className="rz-opt">(opsionale)</span></label>
-              <div className="rz-row">
-                <input id="data" type="date" className="rz-control" value={values.data} onChange={update('data')} />
-                <input id="ora" type="time" className="rz-control" value={values.ora} onChange={update('ora')} aria-label="Ora e preferuar" />
+              <div className="rz-row-v2">
+                <input id="data" type="date" className="rz-control rz-control-date" value={values.data} onChange={update('data')} />
+                <input id="ora" type="time" className="rz-control rz-control-date" value={values.ora} onChange={update('ora')} aria-label="Ora e preferuar" />
               </div>
             </div>
 
