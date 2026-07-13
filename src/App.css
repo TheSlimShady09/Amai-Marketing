@@ -1279,6 +1279,7 @@
 .rz-control-date {
   -webkit-appearance: none;
   appearance: none;
+  min-height: 52px;
   padding-left: 6px !important;
   padding-right: 6px !important;
   text-align: center;
