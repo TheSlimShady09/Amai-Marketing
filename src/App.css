@@ -1192,6 +1192,12 @@
   gap: 16px;
 }
 
+@media (max-width: 600px) {
+  .rz-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .rz-row > * {
   min-width: 0;
 }
