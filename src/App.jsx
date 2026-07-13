@@ -71,44 +71,25 @@ const NAV_LINKS = [
 // >>> ZËVENDËSO me llojet dhe bizneset reale që ke ndihmuar.
 const BIZNES_KATEGORITE = [
   {
-    key: 'resto',
-    label: 'Restorante & Kafe',
-    icon: <Coffee size={18} />,
-    biznese: [
-      { name: 'Kafe Aroma', tag: 'Tiranë' },
-      { name: 'Trattoria Vera', tag: 'Durrës' },
-      { name: 'Bistro Nord', tag: 'Tiranë' },
-      { name: 'Lounge 24', tag: 'Vlorë' }
-    ]
-  },
-  {
     key: 'estetike',
     label: 'Estetikë & Bukuri',
     icon: <Sparkles size={18} />,
     biznese: [
-      { name: 'Nova Estetik', tag: 'Tiranë' },
-      { name: 'Studio Lumo', tag: 'Tiranë' },
-      { name: 'Glow Beauty Bar', tag: 'Durrës' }
+      { id: 'lunea', emri: 'LUNÉA', logo: '/lunea.png' }
     ]
   },
   {
     key: 'shendetesi',
     label: 'Shëndetësi',
     icon: <Stethoscope size={18} />,
-    biznese: [
-      { name: 'DentalCare Tirana', tag: 'Klinikë dentare' },
-      { name: 'Optika Vizion', tag: 'Tiranë' },
-      { name: 'Fizio Plus', tag: 'Fizioterapi' }
-    ]
+    biznese: []
   },
   {
     key: 'retail',
     label: 'Retail & Dyqane',
     icon: <ShoppingBag size={18} />,
     biznese: [
-      { name: 'Boutique Elegance', tag: 'Modë' },
-      { name: 'Fresh Market', tag: 'Ushqime' },
-      { name: 'TechNova', tag: 'Elektronikë' }
+      { id: 'dolce-casa', emri: 'Dolce Casa', logo: '/dolce-casa.png' }
     ]
   },
   {
@@ -116,26 +97,20 @@ const BIZNES_KATEGORITE = [
     label: 'Ndërtim & Pasuri',
     icon: <Building2 size={18} />,
     biznese: [
-      { name: 'BuildPro', tag: 'Ndërtim' },
-      { name: 'Klaros Group', tag: 'Pasuri të paluajtshme' },
-      { name: 'GreenGarden', tag: 'Peizazhe' }
+      { id: 'hidros', emri: 'Hidros', logo: '/hidros.png' }
     ]
   },
   {
     key: 'fitness',
     label: 'Fitness & Sport',
     icon: <Dumbbell size={18} />,
-    biznese: [
-      { name: 'UrbanFit', tag: 'Palestër' },
-      { name: 'AutoMax', tag: 'Auto & motorr' },
-      { name: 'Peak Studio', tag: 'Yoga & Pilates' }
-    ]
+    biznese: []
   }
 ];
 
 // >>> ZËVENDËSO me numrin real të WhatsApp të biznesit,
 //     format ndërkombëtar pa "+" (p.sh. 355691234567)
-const WHATSAPP_NUMER = '355691234567';
+const WHATSAPP_NUMER = '355688007990';
 
 // >>> ZËVENDËSO me profilet reale të biznesit
 const INSTAGRAM_URL = 'https://instagram.com/amaimarketing';
@@ -201,7 +176,7 @@ function Navbar() {
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="container">
         <a href="#" className="logo" onClick={() => setMenuOpen(false)}>
-          <img src={mainLogo} alt="Amai Marketing Logo" style={{ height: '40px' }} />
+          <img src={mainLogo} alt="Amai Marketing Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </a>
         <div className="nav-links">
           {NAV_LINKS.map(link => (
@@ -247,7 +222,10 @@ function Navbar() {
 function Hero() {
   return (
     <section className="hero">
-      <div className="hero-bg"></div>
+      <div className="hero-bg">
+        <div className="hero-orb hero-orb-1"></div>
+        <div className="hero-orb hero-orb-2"></div>
+      </div>
       <div className="container">
         <motion.div
           className="hero-content"
@@ -270,7 +248,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, ease: EASE, delay: 0.15 }}
           >
-            Kthe klikimet në <span>klientë besnikë</span> për biznesin tënd.
+            Kthe klikimet në <span className="hero-highlight">klientë besnikë</span> për biznesin tënd.
           </motion.h1>
 
           <motion.p variants={fadeUp} className="hero-subtitle">
@@ -278,8 +256,11 @@ function Hero() {
           </motion.p>
 
           <motion.div variants={fadeUp} className="hero-actions">
-            <a href="#kontakt" className="btn btn-primary">
-              Merr Konsultë Falas <ArrowRight size={20} />
+            <a href={`https://wa.me/${WHATSAPP_NUMER}?text=${encodeURIComponent("Përshëndetje! Dua të rezervoj një konsultë falas për biznesin tim.")}`} className="btn btn-primary btn-hero" target="_blank" rel="noopener noreferrer">
+              <span className="btn-shine"></span>
+              <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                Merr Konsultë Falas <ArrowRight size={20} />
+              </span>
             </a>
           </motion.div>
         </motion.div>
@@ -293,6 +274,26 @@ function Hero() {
 function Bizneset() {
   const [aktive, setAktive] = useState(BIZNES_KATEGORITE[0].key);
   const kategoria = BIZNES_KATEGORITE.find(k => k.key === aktive);
+
+  const panelVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 }
+    },
+    exit: { opacity: 0, transition: { duration: 0.2 } }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, rotateX: -50, y: 30, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      rotateX: 0, 
+      y: 0,
+      scale: 1,
+      transition: { type: "spring", stiffness: 220, damping: 16 }
+    }
+  };
 
   return (
     <section id="bizneset" className="section">
@@ -343,20 +344,34 @@ function Bizneset() {
             id={`biz-panel-${kategoria.key}`}
             role="tabpanel"
             className="biz-grid"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.35, ease: EASE }}
+            style={{ perspective: 1200 }}
+            variants={panelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
             {kategoria.biznese.map(biz => (
-              <div key={biz.name} className="biz-card">
-                <span className="biz-mark" aria-hidden="true">{biz.name.charAt(0)}</span>
+              <motion.div key={biz.id || biz.emri || biz.name} className="biz-card" variants={cardVariants} style={{ transformOrigin: 'top center' }}>
+                {biz.logo ? (
+                  <img src={biz.logo} alt={biz.emri} style={{ height: '70px', objectFit: 'contain' }} />
+                ) : (
+                  <span className="biz-mark" aria-hidden="true">{(biz.emri || biz.name)?.charAt(0)}</span>
+                )}
                 <div>
-                  <h3 className="biz-name">{biz.name}</h3>
-                  <p className="biz-tag">{biz.tag}</p>
+                  <h3 className="biz-name">{biz.emri || biz.name}</h3>
+                  {(biz.tag || biz.pershkrimi) && <p className="biz-tag">{biz.tag || biz.pershkrimi}</p>}
                 </div>
-              </div>
+              </motion.div>
             ))}
+            {kategoria.biznese.length === 0 && (
+              <motion.div 
+                style={{ padding: '3rem', textAlign: 'center', gridColumn: '1 / -1', color: 'var(--text-muted)' }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                Së shpejti do të shtohen projektet për këtë kategori.
+              </motion.div>
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -1005,7 +1020,7 @@ function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <h2 className="logo" style={{ marginBottom: '16px' }}>
-              <img src={mainLogo} alt="Amai Marketing Logo" style={{ height: '40px' }} />
+              <img src={mainLogo} alt="Amai Marketing Logo" style={{ height: '55px', objectFit: 'contain' }} />
             </h2>
             <p className="footer-desc">
               Ndërtojmë marka që dallohen, krijojmë strategji që funksionojnë dhe zhvillojmë eksperienca dixhitale që sjellin rezultate reale
@@ -1053,11 +1068,11 @@ function Footer() {
           <div>
             <h4 className="footer-title">Na Kontaktoni</h4>
             <div className="footer-links">
-              <a href="mailto:hello@amaimarketing.com" className="footer-link">
-                <Mail size={16} /> hello@amaimarketing.com
+              <a href="mailto:amaimarketinggroup@gmail.com" className="footer-link">
+                <Mail size={16} /> amaimarketinggroup@gmail.com
               </a>
-              <a href="tel:+355690000000" className="footer-link">
-                <Phone size={16} /> +355 69 00 00 000
+              <a href="tel:+355688007990" className="footer-link">
+                <Phone size={16} /> +355 68 800 7990
               </a>
             </div>
           </div>
