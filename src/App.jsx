@@ -804,19 +804,13 @@ function Testimonials() {
               <p className="testimonial-text" style={{ textAlign: 'center', fontSize: '1.25rem', marginBottom: '32px', maxWidth: '650px', lineHeight: 1.7, color: 'var(--text-main)' }}>"{current.text}"</p>
               <div className="testimonial-author" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <AvatarDuotone src={current.avatar} alt={current.author} />
-                <div style={{ textAlign: 'left', marginLeft: '16px' }}>
-                  <div className="author-name" style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '1.1rem' }}>{current.author}</div>
-                  <div className="author-role" style={{ fontSize: '0.95rem', color: 'var(--text-muted)' }}>{current.role}</div>
-                </div>
+                <div className="author-name" style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '1.1rem', marginLeft: '16px' }}>{current.author}</div>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
           
         <div className="slideshow-controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px', marginTop: '48px', position: 'relative', zIndex: 10 }}>
-          <button onClick={() => paginate(-1)} style={{ background: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: '50%', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-main)', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
           <div className="slideshow-dots" style={{ display: 'flex', gap: '10px' }}>
             {testimonials.map((_, idx) => (
               <button
@@ -835,9 +829,6 @@ function Testimonials() {
               />
             ))}
           </div>
-          <button onClick={() => paginate(1)} style={{ background: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: '50%', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-main)', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
         </div>
       </div>
     </section>
