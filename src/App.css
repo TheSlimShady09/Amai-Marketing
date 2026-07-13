@@ -1295,13 +1295,38 @@
   cursor: pointer;
 }
 
+/* Tekst udhëzues brenda inputit të datës/orës kur është bosh */
+.rz-date-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.rz-date-ph {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* Fsheh tekstin native "dd/mm/yyyy" kur fusha është bosh, që të shihet vetëm udhëzimi ynë */
+.rz-control-date.is-empty::-webkit-datetime-edit {
+  color: transparent;
+}
+
 @media (max-width: 768px) {
   .rz-row-v2 {
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
   }
-  .rz-row-v2 > .rz-control-date {
+  .rz-row-v2 > .rz-date-wrap {
+    width: 100% !important;
+  }
+  .rz-row-v2 .rz-control-date {
     width: 100% !important;
     text-align: left;
     padding: 13px 15px !important;
