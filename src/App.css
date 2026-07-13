@@ -1134,9 +1134,11 @@
 
 .rz-control {
   box-sizing: border-box;
+  display: block;
   width: 100%;
+  max-width: 100%;
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 16px; /* Prevents iOS auto-zoom on focus */
   color: var(--text-main);
   background: var(--white);
   border: 1px solid var(--border-color);
