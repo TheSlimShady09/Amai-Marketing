@@ -1032,6 +1032,29 @@
   }
 }
 
+.slider-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.slider-arrow:hover {
+  background: var(--red-50);
+  color: var(--red-900);
+  border-color: var(--red-200);
+  transform: translateY(-2px);
+}
+
 /* CTA */
 .cta-section {
   background: linear-gradient(135deg, var(--red-900), var(--red-800));

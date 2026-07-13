@@ -11,6 +11,8 @@ import {
 } from 'framer-motion';
 import {
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
   Smartphone,
   Target,
   CheckCircle2,
@@ -383,51 +385,7 @@ function Bizneset() {
 const TILT_MAX_DEG = 11;
 const TILT_SPRING = { stiffness: 220, damping: 26, mass: 0.6 };
 
-function ServiceCard({ service }) {
-  const reduceMotion = useReducedMotion();
 
-  // 0..1 pozicioni i kursorit brenda kartës; 0.5/0.5 = qendra (pa rrotullim).
-  const px = useMotionValue(0.5);
-  const py = useMotionValue(0.5);
-
-  const rotateX = useSpring(useTransform(py, [0, 1], [TILT_MAX_DEG, -TILT_MAX_DEG]), TILT_SPRING);
-  const rotateY = useSpring(useTransform(px, [0, 1], [-TILT_MAX_DEG, TILT_MAX_DEG]), TILT_SPRING);
-
-  const glareX = useTransform(px, v => `${v * 100}%`);
-  const glareY = useTransform(py, v => `${v * 100}%`);
-  // Karta është e bardhë — një shkëlqim i bardhë do të ishte i padukshëm, prandaj përdorim të kuqen e brendit.
-  const glare = useMotionTemplate`radial-gradient(circle at ${glareX} ${glareY}, rgba(193, 18, 31, 0.09), rgba(193, 18, 31, 0) 58%)`;
-
-  const recenter = () => {
-    px.set(0.5);
-    py.set(0.5);
-  };
-
-  const handlePointerMove = (event) => {
-    // Prekja rrëshqet karuselin horizontalisht — mos e pengo me tilt.
-    if (reduceMotion || event.pointerType !== 'mouse') return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    px.set((event.clientX - rect.left) / rect.width);
-    py.set((event.clientY - rect.top) / rect.height);
-  };
-
-  return (
-    <div className="service-card-scene" style={{ width: '100%', height: '100%' }}>
-      <motion.article
-        className="service-card"
-        style={{ rotateX, rotateY }}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={recenter}
-        onBlur={recenter}
-      >
-        <motion.span className="service-card-glare" style={{ backgroundImage: glare }} aria-hidden="true" />
-        <div className="service-icon">{service.icon}</div>
-        <h3 className="service-title">{service.title}</h3>
-        <p className="service-desc">{service.desc}</p>
-      </motion.article>
-    </div>
-  );
-}
 
 function Services() {
   const [[page, direction], setPage] = useState([0, 0]);
@@ -552,15 +510,19 @@ function Services() {
                 else if (swipe > swipeConfidenceThreshold) paginate(-1);
               }}
               className="testimonial-card-v2"
-              style={{ padding: 0, background: 'transparent', boxShadow: 'none' }}
               whileTap={{ cursor: 'grabbing' }}
             >
-              <ServiceCard service={current} />
+              <div className="service-icon" style={{ transform: 'translateZ(0)', marginBottom: '16px' }}>{current.icon}</div>
+              <h3 className="service-title" style={{ textAlign: 'center', marginBottom: '12px' }}>{current.title}</h3>
+              <p className="testimonial-text-v2" style={{ fontSize: '1.05rem', marginBottom: 0 }}>{current.desc}</p>
             </motion.div>
           </AnimatePresence>
         </div>
 
         <div className="slideshow-controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px', marginTop: '48px', position: 'relative', zIndex: 10 }}>
+          <button onClick={() => paginate(-1)} className="slider-arrow" aria-label="Prapa">
+            <ChevronLeft size={24} />
+          </button>
           <div className="slideshow-dots" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
             {services.map((_, idx) => (
               <button
@@ -579,6 +541,9 @@ function Services() {
               />
             ))}
           </div>
+          <button onClick={() => paginate(1)} className="slider-arrow" aria-label="Përpara">
+            <ChevronRight size={24} />
+          </button>
         </div>
       </div>
     </section>
@@ -882,6 +847,9 @@ function Testimonials() {
         </div>
           
         <div className="slideshow-controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px', marginTop: '48px', position: 'relative', zIndex: 10 }}>
+          <button onClick={() => paginate(-1)} className="slider-arrow" aria-label="Prapa">
+            <ChevronLeft size={24} />
+          </button>
           <div className="slideshow-dots" style={{ display: 'flex', gap: '10px' }}>
             {testimonials.map((_, idx) => (
               <button
@@ -900,6 +868,9 @@ function Testimonials() {
               />
             ))}
           </div>
+          <button onClick={() => paginate(1)} className="slider-arrow" aria-label="Përpara">
+            <ChevronRight size={24} />
+          </button>
         </div>
       </div>
     </section>
