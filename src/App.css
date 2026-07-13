@@ -1284,13 +1284,13 @@
 
 @media (max-width: 768px) {
   .rz-row-v2 {
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
   .rz-control-date {
-    text-align: center;
-    padding: 10px 2px !important;
-    font-size: 14px !important;
+    text-align: left;
+    padding: 13px 15px !important;
+    font-size: 16px !important; /* Prevents iOS auto-zoom on focus */
   }
 }
 
