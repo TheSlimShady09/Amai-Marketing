@@ -1277,9 +1277,22 @@
 }
 
 .rz-control-date {
+  -webkit-appearance: none;
+  appearance: none;
   padding-left: 6px !important;
   padding-right: 6px !important;
   text-align: center;
+}
+
+/* Rreshto tekstin brenda inputit native të datës/orës njësoj si inputet e tjera */
+.rz-control-date::-webkit-date-and-time-value {
+  text-align: left;
+  margin: 0;
+}
+
+.rz-control-date::-webkit-calendar-picker-indicator {
+  margin-left: auto;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
