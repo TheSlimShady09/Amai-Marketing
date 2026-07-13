@@ -730,9 +730,9 @@ function Testimonials() {
     setPage([page + newDirection, newDirection]);
   };
 
-  const swipeConfidenceThreshold = 10000;
+  const swipeConfidenceThreshold = 50;
   const swipePower = (offset, velocity) => {
-    return Math.abs(offset) * velocity;
+    return offset;
   };
 
   return (
