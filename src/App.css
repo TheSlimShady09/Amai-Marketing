@@ -1194,12 +1194,6 @@
   gap: 16px;
 }
 
-@media (max-width: 600px) {
-  .rz-row {
-    grid-template-columns: 1fr;
-  }
-}
-
 .rz-row > * {
   min-width: 0;
 }
@@ -1378,12 +1372,6 @@
 
   .rezervime-lead {
     max-width: 100%;
-  }
-}
-
-@media (max-width: 460px) {
-  .rz-row {
-    grid-template-columns: 1fr;
   }
 }
 
