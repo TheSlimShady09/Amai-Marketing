@@ -563,8 +563,8 @@
 
 .biz-mark {
   flex-shrink: 0;
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: var(--red-50);
   color: var(--red-900);

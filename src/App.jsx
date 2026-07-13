@@ -77,7 +77,7 @@ const BIZNES_KATEGORITE = [
     label: 'Estetikë & Bukuri',
     icon: <Sparkles size={18} />,
     biznese: [
-      { id: 'lunea', emri: 'LUNÉA', logo: null }
+      { id: 'lunea', emri: 'LUNÉA', logo: '/lunea.png' }
     ]
   },
   {
@@ -91,7 +91,7 @@ const BIZNES_KATEGORITE = [
     label: 'Retail & Dyqane',
     icon: <ShoppingBag size={18} />,
     biznese: [
-      { id: 'dolce-casa', emri: 'Dolce Casa', logo: null }
+      { id: 'dolce-casa', emri: 'Dolce Casa', logo: '/dolce-casa.png' }
     ]
   },
   {
@@ -99,7 +99,7 @@ const BIZNES_KATEGORITE = [
     label: 'Ndërtim & Pasuri',
     icon: <Building2 size={18} />,
     biznese: [
-      { id: 'hidros', emri: 'Hidros', logo: null }
+      { id: 'hidros', emri: 'Hidros', logo: '/hidros.png' }
     ]
   },
   {
@@ -355,7 +355,7 @@ function Bizneset() {
             {kategoria.biznese.map(biz => (
               <motion.div key={biz.id || biz.emri || biz.name} className="biz-card" variants={cardVariants} style={{ transformOrigin: 'top center' }}>
                 {biz.logo ? (
-                  <img src={biz.logo} alt={biz.emri} style={{ height: '70px', objectFit: 'contain' }} />
+                  <img src={biz.logo} alt={biz.emri} style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
                 ) : (
                   <span className="biz-mark" aria-hidden="true">{(biz.emri || biz.name)?.charAt(0)}</span>
                 )}
