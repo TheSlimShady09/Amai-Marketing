@@ -115,7 +115,7 @@ const BIZNES_KATEGORITE = [
     icon: <Hotel size={18} />,
     biznese: [
       { id: 'vila-amare', emri: 'Vila Amare' },
-      { id: 'hotel-erjuma', emri: 'Hotel Erjuma' }
+      { id: 'hotel-erjuma', emri: 'Hotel Erjuma', logo: '/erjuma.png' }
     ]
   }
 ];
