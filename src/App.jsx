@@ -37,7 +37,8 @@ import {
   Stethoscope,
   ShoppingBag,
   Building2,
-  Dumbbell
+  Dumbbell,
+  Hotel
 } from 'lucide-react';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
@@ -107,6 +108,15 @@ const BIZNES_KATEGORITE = [
     label: 'Fitness & Sport',
     icon: <Dumbbell size={18} />,
     biznese: []
+  },
+  {
+    key: 'hotele',
+    label: 'Hotele & Turizëm',
+    icon: <Hotel size={18} />,
+    biznese: [
+      { id: 'vila-amare', emri: 'Vila Amare' },
+      { id: 'hotel-erjuma', emri: 'Hotel Erjuma' }
+    ]
   }
 ];
 
