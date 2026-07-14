@@ -475,19 +475,18 @@
 
 /* Bizneset — tab-a llojesh + rrjet biznesesh */
 .biz-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
   margin-bottom: 48px;
 }
 
 .biz-tab {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 18px;
-  border-radius: 999px;
+  padding: 14px 18px;
+  border-radius: 12px;
   background: var(--white);
   border: 1px solid var(--border-color);
   color: var(--text-muted);
@@ -495,6 +494,7 @@
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
+  text-align: left;
   transition: background-color var(--transition-normal),
               color var(--transition-normal),
               border-color var(--transition-normal),
@@ -529,6 +529,7 @@
   background: var(--red-50);
   color: var(--red-900);
   font-size: 0.75rem;
+  margin-left: auto;
 }
 
 .biz-tab.is-active .biz-tab-count {
